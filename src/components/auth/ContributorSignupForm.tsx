@@ -14,10 +14,11 @@ const contributorSignupSchema = z.object({
   fullName: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Invalid email address"),
   password: z.string().min(6, "Password must be at least 6 characters"),
-  userType: z.enum(["student", "businessman"], {
+  userType: z.enum(["university", "college", "highschool", "businessman"], {
     required_error: "Please select your profile type",
   }),
   university: z.string().optional(),
+  institution: z.string().optional(),
   sscResults: z.string().optional(),
   hscResults: z.string().optional(),
   semester: z.string().optional(),
@@ -25,8 +26,14 @@ const contributorSignupSchema = z.object({
   businessName: z.string().optional(),
   businessType: z.string().optional(),
 }).refine((data) => {
-  if (data.userType === "student") {
+  if (data.userType === "university") {
     return data.university && data.sscResults && data.hscResults && data.semester && data.year;
+  }
+  if (data.userType === "college") {
+    return data.institution && data.sscResults && data.semester && data.year;
+  }
+  if (data.userType === "highschool") {
+    return data.institution && data.year;
   }
   if (data.userType === "businessman") {
     return data.businessName && data.businessType;
@@ -79,6 +86,7 @@ export const ContributorSignupForm = ({ onSuccess }: ContributorSignupFormProps)
       password: "",
       userType: undefined,
       university: "",
+      institution: "",
       sscResults: "",
       hscResults: "",
       semester: "",
@@ -137,15 +145,32 @@ export const ContributorSignupForm = ({ onSuccess }: ContributorSignupFormProps)
         verification_status: "pending",
       };
 
-      if (data.userType === "student") {
+      if (data.userType === "university") {
         profileData.university = data.university;
         profileData.ssc_results = data.sscResults;
         profileData.hsc_results = data.hscResults;
         profileData.semester = data.semester;
         profileData.year = data.year;
+      } else if (data.userType === "college") {
+        profileData.university = data.institution;
+        profileData.ssc_results = data.sscResults;
+        profileData.hsc_results = "-";
+        profileData.semester = data.semester;
+        profileData.year = data.year;
+      } else if (data.userType === "highschool") {
+        profileData.university = data.institution;
+        profileData.ssc_results = "-";
+        profileData.hsc_results = "-";
+        profileData.semester = "-";
+        profileData.year = data.year;
       } else if (data.userType === "businessman") {
         profileData.business_name = data.businessName;
         profileData.business_type = data.businessType;
+        profileData.university = "-";
+        profileData.ssc_results = "-";
+        profileData.hsc_results = "-";
+        profileData.semester = "-";
+        profileData.year = "-";
       }
 
       const { error: profileError } = await supabase
@@ -229,7 +254,9 @@ export const ContributorSignupForm = ({ onSuccess }: ContributorSignupFormProps)
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="student">University Student</SelectItem>
+                  <SelectItem value="university">University Student</SelectItem>
+                  <SelectItem value="college">College Student</SelectItem>
+                  <SelectItem value="highschool">High School Student</SelectItem>
                   <SelectItem value="businessman">Businessman</SelectItem>
                 </SelectContent>
               </Select>
@@ -238,7 +265,7 @@ export const ContributorSignupForm = ({ onSuccess }: ContributorSignupFormProps)
           )}
         />
 
-        {userType === "student" && (
+        {userType === "university" && (
           <>
             <FormField
               control={form.control}
@@ -346,6 +373,133 @@ export const ContributorSignupForm = ({ onSuccess }: ContributorSignupFormProps)
                 )}
               />
             </div>
+          </>
+        )}
+
+        {userType === "college" && (
+          <>
+            <FormField
+              control={form.control}
+              name="institution"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>College Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter your college name" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <div className="grid grid-cols-2 gap-4">
+              <FormField
+                control={form.control}
+                name="sscResults"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>SSC GPA</FormLabel>
+                    <FormControl>
+                      <Input placeholder="5.00" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="semester"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Current Semester</FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select semester" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {[...Array(6)].map((_, i) => (
+                          <SelectItem key={i + 1} value={`${i + 1}`}>
+                            Semester {i + 1}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <FormField
+              control={form.control}
+              name="year"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Academic Year</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select year" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {[2020, 2021, 2022, 2023, 2024, 2025].map((year) => (
+                        <SelectItem key={year} value={`${year}`}>
+                          {year}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </>
+        )}
+
+        {userType === "highschool" && (
+          <>
+            <FormField
+              control={form.control}
+              name="institution"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>High School Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter your high school name" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="year"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Academic Year</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select year" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {[2020, 2021, 2022, 2023, 2024, 2025].map((year) => (
+                        <SelectItem key={year} value={`${year}`}>
+                          {year}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </>
         )}
 
