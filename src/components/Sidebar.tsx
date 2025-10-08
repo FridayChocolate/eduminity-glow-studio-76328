@@ -45,24 +45,15 @@ export const Sidebar = () => {
               </Button>
             </div>
           ) : (
-            <div className="space-y-2">
-              <Button
-                variant="outline"
-                className="w-full justify-start text-sm dark:border-neon-teal/50 dark:hover:bg-neon-teal/10"
-                onClick={() => navigate("/auth")}
-              >
-                <UserPlus className="mr-2 h-4 w-4" />
-                Join as Student
-              </Button>
-              <Button
-                variant="outline"
-                className="w-full justify-start text-sm dark:border-neon-violet/50 dark:hover:bg-neon-violet/10"
-                onClick={() => navigate("/auth")}
-              >
-                <UserPlus className="mr-2 h-4 w-4" />
-                Join as Contributor
-              </Button>
-            </div>
+            <Button
+              variant="outline"
+              className="w-full justify-start text-sm dark:border-neon-teal/50 dark:hover:bg-neon-teal/10 group overflow-hidden relative"
+              onClick={() => navigate("/auth")}
+            >
+              <UserPlus className="mr-2 h-4 w-4 group-hover:animate-[scale-in_0.3s_ease-out]" />
+              <span className="relative z-10">Join Us</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-neon-teal/20 via-neon-violet/20 to-neon-magenta/20 opacity-0 group-hover:opacity-100 group-hover:animate-[slide-in-right_0.5s_ease-out] -z-0" />
+            </Button>
           )}
         </div>
       </Card>
