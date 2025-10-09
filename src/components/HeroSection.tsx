@@ -11,7 +11,7 @@ export const HeroSection = () => {
         <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent dark:from-neon-teal dark:via-neon-violet dark:to-neon-magenta">
           Empowering Students Through Shared Knowledge
         </h1>
-        <p className="text-lg text-muted-foreground max-w-2xl dark:text-foreground/80">
+        <p className="text-lg text-foreground/70 max-w-2xl dark:text-foreground/80">
           Upload, discover, and excel with Bangladesh's premier student resource platform
         </p>
       </div>
