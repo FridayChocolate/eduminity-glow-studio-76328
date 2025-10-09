@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Plus, Briefcase, Clock, DollarSign } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Plus, Briefcase, Clock, DollarSign, Search, Filter } from "lucide-react";
 import { CreateWorkRequestDialog } from "./work/CreateWorkRequestDialog";
 import { useAuth } from "@/hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { Badge } from "@/components/ui/badge";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 type WorkRequest = {
   id: string;
@@ -16,6 +19,9 @@ type WorkRequest = {
   subject: string | null;
   deadline: string | null;
   status: string;
+  work_type: string | null;
+  payment_status: string | null;
+  payment_amount: number | null;
   created_at: string;
   profile?: {
     id: string;
@@ -23,8 +29,21 @@ type WorkRequest = {
   };
 };
 
+const WORK_CATEGORIES = [
+  "All",
+  "Assignment Help",
+  "Practical Help",
+  "Lab Report Help",
+  "Exam Preparation",
+  "Project Work",
+  "Research Help",
+  "Other"
+];
+
 export const WorkCommunity = () => {
   const [showCreateDialog, setShowCreateDialog] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All");
   const { user } = useAuth();
 
   const { data: workRequests, isLoading } = useQuery<WorkRequest[]>({
@@ -57,6 +76,14 @@ export const WorkCommunity = () => {
     },
   });
 
+  // Filter work requests based on search and category
+  const filteredRequests = workRequests?.filter(request => {
+    const matchesSearch = request.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         request.description.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCategory = selectedCategory === "All" || request.work_type === selectedCategory;
+    return matchesSearch && matchesCategory;
+  });
+
   return (
     <section className="mb-8">
       <div className="flex items-center justify-between mb-6">
@@ -77,6 +104,32 @@ export const WorkCommunity = () => {
         )}
       </div>
 
+      {/* Search and Filter Section */}
+      <div className="mb-6 flex flex-col md:flex-row gap-4">
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder="Search work requests..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-10"
+          />
+        </div>
+        <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+          <SelectTrigger className="w-full md:w-[200px]">
+            <Filter className="mr-2 h-4 w-4" />
+            <SelectValue placeholder="Category" />
+          </SelectTrigger>
+          <SelectContent>
+            {WORK_CATEGORIES.map(category => (
+              <SelectItem key={category} value={category}>
+                {category}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+
       {isLoading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[...Array(6)].map((_, i) => (
@@ -85,7 +138,8 @@ export const WorkCommunity = () => {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {workRequests?.map((request) => (
+          {filteredRequests && filteredRequests.length > 0 ? (
+            filteredRequests.map((request) => (
             <Card
               key={request.id}
               className="p-6 hover:shadow-lg transition-all dark:border-neon-violet/30 dark:hover:border-neon-violet dark:hover:shadow-glow-violet"
@@ -103,10 +157,19 @@ export const WorkCommunity = () => {
               </div>
 
               <div className="space-y-2 mt-4 pt-4 border-t border-border">
+                {request.work_type && (
+                  <Badge variant="secondary" className="mb-2">
+                    {request.work_type}
+                  </Badge>
+                )}
                 <div className="flex items-center gap-2 text-sm">
                   <DollarSign className="h-4 w-4 text-muted-foreground" />
                   <span className="text-muted-foreground">Budget:</span>
-                  <span className="font-medium">{request.budget || "Negotiable"}</span>
+                  <span className="font-medium">
+                    {request.payment_amount 
+                      ? `৳${request.payment_amount.toFixed(2)}` 
+                      : request.budget || "Negotiable"}
+                  </span>
                 </div>
                 <div className="flex items-center gap-2 text-sm">
                   <Clock className="h-4 w-4 text-muted-foreground" />
@@ -117,6 +180,14 @@ export const WorkCommunity = () => {
                   <div className="inline-block px-3 py-1 rounded-full text-xs bg-primary/10 dark:bg-neon-teal/20 text-primary dark:text-neon-teal">
                     {request.subject}
                   </div>
+                )}
+                {request.payment_status && request.payment_status !== 'pending' && (
+                  <Badge 
+                    variant={request.payment_status === 'completed' ? 'default' : 'outline'}
+                    className="mt-2"
+                  >
+                    Payment: {request.payment_status}
+                  </Badge>
                 )}
               </div>
 
@@ -130,7 +201,12 @@ export const WorkCommunity = () => {
                 View Details
               </Button>
             </Card>
-          ))}
+          ))
+          ) : (
+            <div className="col-span-full text-center py-12">
+              <p className="text-muted-foreground">No work requests found matching your criteria.</p>
+            </div>
+          )}
         </div>
       )}
 

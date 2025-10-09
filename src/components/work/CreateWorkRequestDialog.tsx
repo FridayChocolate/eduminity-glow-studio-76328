@@ -6,16 +6,32 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
 import { useQueryClient } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
 
+const WORK_TYPES = [
+  "Assignment Help",
+  "Practical Help",
+  "Lab Report Help",
+  "Exam Preparation",
+  "Project Work",
+  "Research Help",
+  "Other"
+];
+
 const workRequestSchema = z.object({
   title: z.string().min(5, "Title must be at least 5 characters"),
   description: z.string().min(20, "Description must be at least 20 characters"),
+  work_type: z.string().min(1, "Please select a work type"),
   budget: z.string().optional(),
+  payment_amount: z.string().optional().refine(
+    (val) => !val || !isNaN(parseFloat(val)),
+    { message: "Please enter a valid amount" }
+  ),
   subject: z.string().optional(),
   deadline: z.string().optional(),
 });
@@ -37,7 +53,9 @@ export const CreateWorkRequestDialog = ({ open, onOpenChange }: CreateWorkReques
     defaultValues: {
       title: "",
       description: "",
+      work_type: "",
       budget: "",
+      payment_amount: "",
       subject: "",
       deadline: "",
     },
@@ -61,10 +79,13 @@ export const CreateWorkRequestDialog = ({ open, onOpenChange }: CreateWorkReques
       user_id: user.id,
       title: data.title,
       description: data.description,
+      work_type: data.work_type,
       budget: data.budget,
+      payment_amount: data.payment_amount ? parseFloat(data.payment_amount) : null,
       subject: data.subject,
       deadline: data.deadline,
       status: "open",
+      payment_status: "pending",
     });
 
     if (error) {
@@ -109,6 +130,31 @@ export const CreateWorkRequestDialog = ({ open, onOpenChange }: CreateWorkReques
 
             <FormField
               control={form.control}
+              name="work_type"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Work Type</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select work type" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {WORK_TYPES.map((type) => (
+                        <SelectItem key={type} value={type}>
+                          {type}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
               name="description"
               render={({ field }) => (
                 <FormItem>
@@ -128,12 +174,26 @@ export const CreateWorkRequestDialog = ({ open, onOpenChange }: CreateWorkReques
             <div className="grid grid-cols-2 gap-4">
               <FormField
                 control={form.control}
+                name="payment_amount"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Payment Amount (৳)</FormLabel>
+                    <FormControl>
+                      <Input type="number" placeholder="e.g., 500" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
                 name="budget"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Budget (Optional)</FormLabel>
+                    <FormLabel>Budget Description</FormLabel>
                     <FormControl>
-                      <Input placeholder="e.g., ৳500" {...field} />
+                      <Input placeholder="e.g., Negotiable" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

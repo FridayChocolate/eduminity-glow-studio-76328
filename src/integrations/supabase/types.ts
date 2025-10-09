@@ -117,10 +117,13 @@ export type Database = {
           deadline: string | null
           description: string
           id: string
+          payment_amount: number | null
+          payment_status: string | null
           status: string | null
           subject: string | null
           title: string
           user_id: string
+          work_type: string | null
         }
         Insert: {
           budget?: string | null
@@ -128,10 +131,13 @@ export type Database = {
           deadline?: string | null
           description: string
           id?: string
+          payment_amount?: number | null
+          payment_status?: string | null
           status?: string | null
           subject?: string | null
           title: string
           user_id: string
+          work_type?: string | null
         }
         Update: {
           budget?: string | null
@@ -139,10 +145,13 @@ export type Database = {
           deadline?: string | null
           description?: string
           id?: string
+          payment_amount?: number | null
+          payment_status?: string | null
           status?: string | null
           subject?: string | null
           title?: string
           user_id?: string
+          work_type?: string | null
         }
         Relationships: []
       }
