@@ -10,9 +10,9 @@ export const Header = () => {
       <div className="container flex h-16 items-center justify-between px-4">
         <div className="flex items-center gap-8">
           <div className="flex items-center gap-2">
-            <div className="text-2xl font-bold text-primary dark:bg-gradient-to-r dark:from-neon-teal dark:to-neon-violet dark:bg-clip-text dark:text-transparent dark:animate-glow-pulse">
+            <span className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent dark:from-neon-teal dark:to-neon-violet dark:animate-glow-pulse [-webkit-text-fill-color:transparent]">
               Eduminity
-            </div>
+            </span>
           </div>
           <nav className="hidden md:flex gap-6">
             <a href="#" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
