@@ -8,7 +8,7 @@ export const HeroSection = () => {
         style={{ backgroundImage: `url(${heroImage})` }}
       />
       <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-6">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent dark:from-neon-teal dark:via-neon-violet dark:to-neon-magenta">
+        <h1 className="text-4xl md:text-5xl font-bold mb-4 text-foreground dark:bg-gradient-to-r dark:from-neon-teal dark:via-neon-violet dark:to-neon-magenta dark:bg-clip-text dark:text-transparent">
           Empowering Students Through Shared Knowledge
         </h1>
         <p className="text-lg text-foreground/70 max-w-2xl dark:text-foreground/80">
