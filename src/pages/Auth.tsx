@@ -5,6 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { StudentSignupForm } from "@/components/auth/StudentSignupForm";
 import { ContributorSignupForm } from "@/components/auth/ContributorSignupForm";
 import { LoginForm } from "@/components/auth/LoginForm";
+import { LoginMonster } from "@/components/auth/LoginMonster";
 import { useAuth } from "@/hooks/useAuth";
 
 const Auth = () => {
@@ -22,6 +23,7 @@ const Auth = () => {
     <div className="min-h-screen bg-background flex items-center justify-center p-6 font-['Inter']">
       <div className="w-full max-w-4xl">
         <div className="text-center mb-8">
+          <LoginMonster />
           <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-neon-teal via-neon-violet to-neon-magenta bg-clip-text text-transparent dark:text-transparent">
             Welcome to Eduminity
           </h1>
