@@ -2,11 +2,25 @@ import { useEffect, useState } from "react";
 
 export const LoginMonster = () => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [emotion, setEmotion] = useState<"happy" | "curious" | "excited">("curious");
-  const [monsterPos, setMonsterPos] = useState({ x: 0, y: 0 });
+  const [emotion, setEmotion] = useState<"happy" | "curious" | "excited" | "laughing">("curious");
+  const [isJumping, setIsJumping] = useState(false);
+
+  const handleClick = () => {
+    setIsJumping(true);
+    setEmotion("laughing");
+    
+    setTimeout(() => {
+      setIsJumping(false);
+      setTimeout(() => {
+        setEmotion("happy");
+      }, 300);
+    }, 600);
+  };
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
+      if (isJumping) return; // Don't track mouse while jumping
+      
       const monsterElement = document.getElementById("login-monster");
       if (monsterElement) {
         const rect = monsterElement.getBoundingClientRect();
@@ -36,7 +50,7 @@ export const LoginMonster = () => {
 
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
+  }, [isJumping]);
 
   // Calculate eye movement based on mouse position
   const maxEyeMove = 8;
@@ -47,6 +61,8 @@ export const LoginMonster = () => {
 
   const getMouthPath = () => {
     switch (emotion) {
+      case "laughing":
+        return "M 28 43 Q 40 58 52 43"; // Wide open laugh
       case "excited":
         return "M 30 45 Q 40 55 50 45"; // Big smile
       case "happy":
@@ -57,16 +73,20 @@ export const LoginMonster = () => {
   };
 
   const getEyeSize = () => {
+    if (emotion === "laughing") return 6; // Squinted eyes when laughing
     return emotion === "excited" ? 12 : 10;
   };
 
   return (
     <div 
       id="login-monster" 
-      className="flex items-center justify-center mb-8 relative"
+      className="flex items-center justify-center mb-8 relative cursor-pointer"
+      onClick={handleClick}
       style={{ 
-        transform: `translateY(${Math.sin(Date.now() / 1000) * 3}px)`,
-        transition: "transform 0.3s ease-out"
+        transform: isJumping 
+          ? "translateY(-30px) rotate(5deg)" 
+          : `translateY(${Math.sin(Date.now() / 1000) * 3}px)`,
+        transition: isJumping ? "transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55)" : "transform 0.3s ease-out"
       }}
     >
       <svg
@@ -132,11 +152,19 @@ export const LoginMonster = () => {
           className="transition-all duration-300"
         />
 
-        {/* Blush when excited */}
-        {emotion === "excited" && (
+        {/* Blush when excited or laughing */}
+        {(emotion === "excited" || emotion === "laughing") && (
           <>
             <circle cx="22" cy="42" r="3" className="fill-neon-magenta/40 animate-pulse" />
             <circle cx="58" cy="42" r="3" className="fill-neon-magenta/40 animate-pulse" />
+          </>
+        )}
+
+        {/* Laugh tears when laughing */}
+        {emotion === "laughing" && (
+          <>
+            <circle cx="26" cy="40" r="2" className="fill-neon-teal/60 animate-pulse" />
+            <circle cx="54" cy="40" r="2" className="fill-neon-teal/60 animate-pulse" />
           </>
         )}
 
