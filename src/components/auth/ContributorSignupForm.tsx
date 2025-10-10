@@ -154,12 +154,12 @@ export const ContributorSignupForm = ({ onSuccess }: ContributorSignupFormProps)
       } else if (data.userType === "college") {
         profileData.university = data.institution;
         profileData.ssc_results = data.sscResults;
-        profileData.hsc_results = "-";
+        profileData.hsc_results = data.hscResults;
         profileData.semester = data.semester;
         profileData.year = data.year;
       } else if (data.userType === "highschool") {
         profileData.university = data.institution;
-        profileData.ssc_results = "-";
+        profileData.ssc_results = data.sscResults || "-";
         profileData.hsc_results = "-";
         profileData.semester = "-";
         profileData.year = data.year;
@@ -392,21 +392,35 @@ export const ContributorSignupForm = ({ onSuccess }: ContributorSignupFormProps)
               )}
             />
 
-            <div className="grid grid-cols-2 gap-4">
-              <FormField
-                control={form.control}
-                name="sscResults"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>SSC GPA</FormLabel>
-                    <FormControl>
-                      <Input placeholder="5.00" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+            <FormField
+              control={form.control}
+              name="sscResults"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>SSC GPA</FormLabel>
+                  <FormControl>
+                    <Input placeholder="5.00" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
+            <FormField
+              control={form.control}
+              name="hscResults"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>HSC GPA</FormLabel>
+                  <FormControl>
+                    <Input placeholder="5.00" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <div className="grid grid-cols-2 gap-4">
               <FormField
                 control={form.control}
                 name="semester"
@@ -431,32 +445,33 @@ export const ContributorSignupForm = ({ onSuccess }: ContributorSignupFormProps)
                   </FormItem>
                 )}
               />
+
+              <FormField
+                control={form.control}
+                name="year"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Academic Year</FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select year" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {[2020, 2021, 2022, 2023, 2024, 2025].map((year) => (
+                          <SelectItem key={year} value={`${year}`}>
+                            {year}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
 
-            <FormField
-              control={form.control}
-              name="year"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Academic Year</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select year" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {[2020, 2021, 2022, 2023, 2024, 2025].map((year) => (
-                        <SelectItem key={year} value={`${year}`}>
-                          {year}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
           </>
         )}
 
@@ -470,6 +485,20 @@ export const ContributorSignupForm = ({ onSuccess }: ContributorSignupFormProps)
                   <FormLabel>High School Name</FormLabel>
                   <FormControl>
                     <Input placeholder="Enter your high school name" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="sscResults"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>SSC GPA (Optional)</FormLabel>
+                  <FormControl>
+                    <Input placeholder="5.00" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
