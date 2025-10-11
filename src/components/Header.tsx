@@ -1,4 +1,4 @@
-import { Moon, Sun, User } from "lucide-react";
+import { Moon, Sun, User, Wallet } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
@@ -31,18 +31,30 @@ export const Header = () => {
             </span>
           </div>
           <nav className="hidden md:flex gap-6">
-            <a href="#" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
+            <button
+              onClick={() => navigate("/")}
+              className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+            >
               Home
-            </a>
-            <a href="#sheets" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
-              Sheets
-            </a>
-            <a href="#community" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
+            </button>
+            <button
+              onClick={() => navigate("/questions")}
+              className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+            >
+              Q&A
+            </button>
+            <button
+              onClick={() => navigate("/materials")}
+              className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+            >
+              Study Hub
+            </button>
+            <button
+              onClick={() => navigate("/community")}
+              className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+            >
               Community
-            </a>
-            <a href="#support" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
-              Support
-            </a>
+            </button>
           </nav>
         </div>
         
@@ -62,6 +74,14 @@ export const Header = () => {
 
           {user ? (
             <>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => navigate("/wallet")}
+                className="hover:bg-muted dark:hover:shadow-glow-teal transition-all"
+              >
+                <Wallet className="h-5 w-5" />
+              </Button>
               <Button
                 variant="ghost"
                 size="icon"

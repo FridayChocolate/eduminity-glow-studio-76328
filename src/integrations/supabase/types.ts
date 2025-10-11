@@ -14,6 +14,145 @@ export type Database = {
   }
   public: {
     Tables: {
+      answer_ratings: {
+        Row: {
+          answer_id: string
+          created_at: string | null
+          id: string
+          rating: number | null
+          user_id: string
+        }
+        Insert: {
+          answer_id: string
+          created_at?: string | null
+          id?: string
+          rating?: number | null
+          user_id: string
+        }
+        Update: {
+          answer_id?: string
+          created_at?: string | null
+          id?: string
+          rating?: number | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "answer_ratings_answer_id_fkey"
+            columns: ["answer_id"]
+            isOneToOne: false
+            referencedRelation: "answers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      answers: {
+        Row: {
+          content: string
+          created_at: string | null
+          id: string
+          is_best_answer: boolean | null
+          question_id: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string | null
+          id?: string
+          is_best_answer?: boolean | null
+          question_id: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string | null
+          id?: string
+          is_best_answer?: boolean | null
+          question_id?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "answers_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "questions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      badges: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          icon: string | null
+          id: string
+          name: string
+          requirement_type: string | null
+          requirement_value: number | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          icon?: string | null
+          id?: string
+          name: string
+          requirement_type?: string | null
+          requirement_value?: number | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          icon?: string | null
+          id?: string
+          name?: string
+          requirement_type?: string | null
+          requirement_value?: number | null
+        }
+        Relationships: []
+      }
+      blog_posts: {
+        Row: {
+          author_id: string
+          category: string | null
+          content: string
+          created_at: string | null
+          featured_image: string | null
+          id: string
+          published: boolean | null
+          title: string
+          updated_at: string | null
+          views: number | null
+        }
+        Insert: {
+          author_id: string
+          category?: string | null
+          content: string
+          created_at?: string | null
+          featured_image?: string | null
+          id?: string
+          published?: boolean | null
+          title: string
+          updated_at?: string | null
+          views?: number | null
+        }
+        Update: {
+          author_id?: string
+          category?: string | null
+          content?: string
+          created_at?: string | null
+          featured_image?: string | null
+          id?: string
+          published?: boolean | null
+          title?: string
+          updated_at?: string | null
+          views?: number | null
+        }
+        Relationships: []
+      }
       contributor_profiles: {
         Row: {
           business_name: string | null
@@ -56,6 +195,198 @@ export type Database = {
         }
         Relationships: []
       }
+      discussion_boards: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          icon: string | null
+          id: string
+          subject: string
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          icon?: string | null
+          id?: string
+          subject: string
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          icon?: string | null
+          id?: string
+          subject?: string
+        }
+        Relationships: []
+      }
+      discussion_replies: {
+        Row: {
+          content: string
+          created_at: string | null
+          discussion_id: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string | null
+          discussion_id: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string | null
+          discussion_id?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "discussion_replies_discussion_id_fkey"
+            columns: ["discussion_id"]
+            isOneToOne: false
+            referencedRelation: "discussions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      discussions: {
+        Row: {
+          board_id: string
+          content: string
+          created_at: string | null
+          id: string
+          title: string
+          updated_at: string | null
+          user_id: string
+          views: number | null
+        }
+        Insert: {
+          board_id: string
+          content: string
+          created_at?: string | null
+          id?: string
+          title: string
+          updated_at?: string | null
+          user_id: string
+          views?: number | null
+        }
+        Update: {
+          board_id?: string
+          content?: string
+          created_at?: string | null
+          id?: string
+          title?: string
+          updated_at?: string | null
+          user_id?: string
+          views?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "discussions_board_id_fkey"
+            columns: ["board_id"]
+            isOneToOne: false
+            referencedRelation: "discussion_boards"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      material_categories: {
+        Row: {
+          color: string | null
+          created_at: string | null
+          description: string | null
+          icon: string | null
+          id: string
+          name: string
+        }
+        Insert: {
+          color?: string | null
+          created_at?: string | null
+          description?: string | null
+          icon?: string | null
+          id?: string
+          name: string
+        }
+        Update: {
+          color?: string | null
+          created_at?: string | null
+          description?: string | null
+          icon?: string | null
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
+      material_reviews: {
+        Row: {
+          comment: string | null
+          created_at: string | null
+          id: string
+          material_id: string
+          rating: number | null
+          user_id: string
+        }
+        Insert: {
+          comment?: string | null
+          created_at?: string | null
+          id?: string
+          material_id: string
+          rating?: number | null
+          user_id: string
+        }
+        Update: {
+          comment?: string | null
+          created_at?: string | null
+          id?: string
+          material_id?: string
+          rating?: number | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "material_reviews_material_id_fkey"
+            columns: ["material_id"]
+            isOneToOne: false
+            referencedRelation: "study_materials"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profile_verifications: {
+        Row: {
+          created_at: string | null
+          id: string
+          institution_name: string
+          status: Database["public"]["Enums"]["verification_status"] | null
+          updated_at: string | null
+          user_id: string
+          verification_document: string | null
+          verified_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          institution_name: string
+          status?: Database["public"]["Enums"]["verification_status"] | null
+          updated_at?: string | null
+          user_id: string
+          verification_document?: string | null
+          verified_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          institution_name?: string
+          status?: Database["public"]["Enums"]["verification_status"] | null
+          updated_at?: string | null
+          user_id?: string
+          verification_document?: string | null
+          verified_at?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -89,6 +420,178 @@ export type Database = {
         }
         Relationships: []
       }
+      questions: {
+        Row: {
+          coin_reward: number | null
+          created_at: string | null
+          description: string
+          grade_level: string | null
+          id: string
+          is_private: boolean | null
+          status: Database["public"]["Enums"]["question_status"] | null
+          subject: string
+          title: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          coin_reward?: number | null
+          created_at?: string | null
+          description: string
+          grade_level?: string | null
+          id?: string
+          is_private?: boolean | null
+          status?: Database["public"]["Enums"]["question_status"] | null
+          subject: string
+          title: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          coin_reward?: number | null
+          created_at?: string | null
+          description?: string
+          grade_level?: string | null
+          id?: string
+          is_private?: boolean | null
+          status?: Database["public"]["Enums"]["question_status"] | null
+          subject?: string
+          title?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      study_materials: {
+        Row: {
+          category_id: string | null
+          created_at: string | null
+          description: string | null
+          downloads: number | null
+          file_url: string | null
+          grade_level: string | null
+          id: string
+          is_free: boolean | null
+          preview_url: string | null
+          price: number | null
+          rating: number | null
+          subject: string
+          title: string
+          updated_at: string | null
+          user_id: string
+          video_url: string | null
+          views: number | null
+        }
+        Insert: {
+          category_id?: string | null
+          created_at?: string | null
+          description?: string | null
+          downloads?: number | null
+          file_url?: string | null
+          grade_level?: string | null
+          id?: string
+          is_free?: boolean | null
+          preview_url?: string | null
+          price?: number | null
+          rating?: number | null
+          subject: string
+          title: string
+          updated_at?: string | null
+          user_id: string
+          video_url?: string | null
+          views?: number | null
+        }
+        Update: {
+          category_id?: string | null
+          created_at?: string | null
+          description?: string | null
+          downloads?: number | null
+          file_url?: string | null
+          grade_level?: string | null
+          id?: string
+          is_free?: boolean | null
+          preview_url?: string | null
+          price?: number | null
+          rating?: number | null
+          subject?: string
+          title?: string
+          updated_at?: string | null
+          user_id?: string
+          video_url?: string | null
+          views?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "study_materials_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "material_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      transactions: {
+        Row: {
+          amount: number
+          commission_amount: number | null
+          created_at: string | null
+          description: string | null
+          id: string
+          reference_id: string | null
+          type: Database["public"]["Enums"]["transaction_type"]
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          commission_amount?: number | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          reference_id?: string | null
+          type: Database["public"]["Enums"]["transaction_type"]
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          commission_amount?: number | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          reference_id?: string | null
+          type?: Database["public"]["Enums"]["transaction_type"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_badges: {
+        Row: {
+          badge_id: string
+          earned_at: string | null
+          id: string
+          user_id: string
+        }
+        Insert: {
+          badge_id: string
+          earned_at?: string | null
+          id?: string
+          user_id: string
+        }
+        Update: {
+          badge_id?: string
+          earned_at?: string | null
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_badges_badge_id_fkey"
+            columns: ["badge_id"]
+            isOneToOne: false
+            referencedRelation: "badges"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           created_at: string | null
@@ -106,6 +609,39 @@ export type Database = {
           created_at?: string | null
           id?: string
           role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      wallets: {
+        Row: {
+          balance: number | null
+          created_at: string | null
+          id: string
+          total_earned: number | null
+          total_spent: number | null
+          total_withdrawn: number | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          balance?: number | null
+          created_at?: string | null
+          id?: string
+          total_earned?: number | null
+          total_spent?: number | null
+          total_withdrawn?: number | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          balance?: number | null
+          created_at?: string | null
+          id?: string
+          total_earned?: number | null
+          total_spent?: number | null
+          total_withdrawn?: number | null
+          updated_at?: string | null
           user_id?: string
         }
         Relationships: []
@@ -170,6 +706,9 @@ export type Database = {
     }
     Enums: {
       app_role: "student" | "contributor"
+      question_status: "open" | "answered" | "closed"
+      transaction_type: "earn" | "spend" | "withdraw" | "commission"
+      verification_status: "pending" | "verified" | "rejected"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -298,6 +837,9 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["student", "contributor"],
+      question_status: ["open", "answered", "closed"],
+      transaction_type: ["earn", "spend", "withdraw", "commission"],
+      verification_status: ["pending", "verified", "rejected"],
     },
   },
 } as const
