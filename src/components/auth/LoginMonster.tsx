@@ -121,26 +121,26 @@ export const LoginMonster = () => {
         <circle cx="60" cy="25" r="4" className="fill-primary/40" />
 
         {/* Eyes white */}
-        <circle cx="30" cy="35" r={getEyeSize()} className="fill-background" />
-        <circle cx="50" cy="35" r={getEyeSize()} className="fill-background" />
+        <circle cx="30" cy="35" r={getEyeSize()} className="fill-white" />
+        <circle cx="50" cy="35" r={getEyeSize()} className="fill-white" />
 
         {/* Pupils - track mouse */}
         <circle
           cx={30 + eyeMoveX}
           cy={35 + eyeMoveY}
           r="4"
-          className="fill-foreground transition-all duration-100"
+          className="fill-gray-900 transition-all duration-100"
         />
         <circle
           cx={50 + eyeMoveX}
           cy={35 + eyeMoveY}
           r="4"
-          className="fill-foreground transition-all duration-100"
+          className="fill-gray-900 transition-all duration-100"
         />
 
         {/* Eye highlights */}
-        <circle cx={30 + eyeMoveX - 1} cy={35 + eyeMoveY - 1} r="1.5" className="fill-background/80" />
-        <circle cx={50 + eyeMoveX - 1} cy={35 + eyeMoveY - 1} r="1.5" className="fill-background/80" />
+        <circle cx={30 + eyeMoveX - 1} cy={35 + eyeMoveY - 1} r="1.5" className="fill-white/90" />
+        <circle cx={50 + eyeMoveX - 1} cy={35 + eyeMoveY - 1} r="1.5" className="fill-white/90" />
 
         {/* Mouth */}
         <path

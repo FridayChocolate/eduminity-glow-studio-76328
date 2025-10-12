@@ -26,7 +26,7 @@ export const Header = () => {
       <div className="container flex h-16 items-center justify-between px-4">
         <div className="flex items-center gap-8">
           <div className="flex items-center gap-2">
-            <span className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent dark:from-neon-teal dark:to-neon-violet dark:animate-glow-pulse [-webkit-text-fill-color:transparent]">
+            <span className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent dark:from-neon-teal dark:to-neon-violet dark:animate-glow-pulse [-webkit-text-fill-color:transparent] [-webkit-background-clip:text]">
               Eduminity
             </span>
           </div>
