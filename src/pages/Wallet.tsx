@@ -4,13 +4,16 @@ import { Header } from "@/components/Header";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Wallet as WalletIcon, TrendingUp, TrendingDown, Download, ArrowLeft } from "lucide-react";
+import { Wallet as WalletIcon, TrendingUp, TrendingDown, Download, ArrowLeft, Tv, Heart, Crown } from "lucide-react";
+import { WatchAdDialog } from "@/components/premium/WatchAdDialog";
+import { useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 
 const Wallet = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
+  const [showAdDialog, setShowAdDialog] = useState(false);
 
   const { data: wallet, isLoading: walletLoading } = useQuery({
     queryKey: ["wallet", user?.id],
@@ -122,14 +125,38 @@ const Wallet = () => {
           </div>
 
           {/* Action Buttons */}
-          <div className="flex gap-4 mb-8">
-            <Button className="flex-1 bg-gradient-to-r from-neon-teal to-neon-violet hover:opacity-90">
-              Add Funds
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <Button 
+              onClick={() => setShowAdDialog(true)}
+              className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:opacity-90"
+            >
+              <Tv className="mr-2 h-4 w-4" />
+              Watch Ad
             </Button>
-            <Button variant="outline" className="flex-1">
+            <Button 
+              onClick={() => navigate("/donate")}
+              className="bg-gradient-to-r from-pink-500 to-red-500 hover:opacity-90"
+            >
+              <Heart className="mr-2 h-4 w-4" />
+              Donate
+            </Button>
+            <Button 
+              onClick={() => navigate("/premium")}
+              className="bg-gradient-to-r from-purple-500 to-indigo-500 hover:opacity-90"
+            >
+              <Crown className="mr-2 h-4 w-4" />
+              Premium
+            </Button>
+            <Button variant="outline">
+              <Download className="mr-2 h-4 w-4" />
               Withdraw
             </Button>
           </div>
+
+          <WatchAdDialog 
+            open={showAdDialog} 
+            onOpenChange={setShowAdDialog}
+          />
 
           {/* Transaction History */}
           <Card>

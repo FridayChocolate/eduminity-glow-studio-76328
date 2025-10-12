@@ -14,6 +14,30 @@ export type Database = {
   }
   public: {
     Tables: {
+      ad_views: {
+        Row: {
+          ad_type: string
+          coins_earned: number
+          created_at: string | null
+          id: string
+          user_id: string
+        }
+        Insert: {
+          ad_type: string
+          coins_earned?: number
+          created_at?: string | null
+          id?: string
+          user_id: string
+        }
+        Update: {
+          ad_type?: string
+          coins_earned?: number
+          created_at?: string | null
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       answer_ratings: {
         Row: {
           answer_id: string
@@ -292,6 +316,33 @@ export type Database = {
           },
         ]
       }
+      donations: {
+        Row: {
+          amount: number
+          created_at: string | null
+          donor_user_id: string
+          id: string
+          is_anonymous: boolean | null
+          message: string | null
+        }
+        Insert: {
+          amount: number
+          created_at?: string | null
+          donor_user_id: string
+          id?: string
+          is_anonymous?: boolean | null
+          message?: string | null
+        }
+        Update: {
+          amount?: number
+          created_at?: string | null
+          donor_user_id?: string
+          id?: string
+          is_anonymous?: boolean | null
+          message?: string | null
+        }
+        Relationships: []
+      }
       material_categories: {
         Row: {
           color: string | null
@@ -353,6 +404,30 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      premium_features: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          id: string
+          name: string
+          tier: Database["public"]["Enums"]["subscription_tier"]
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          name: string
+          tier: Database["public"]["Enums"]["subscription_tier"]
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          name?: string
+          tier?: Database["public"]["Enums"]["subscription_tier"]
+        }
+        Relationships: []
       }
       profile_verifications: {
         Row: {
@@ -529,6 +604,45 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      subscriptions: {
+        Row: {
+          created_at: string | null
+          expires_at: string | null
+          id: string
+          started_at: string
+          status: string
+          stripe_customer_id: string | null
+          stripe_subscription_id: string | null
+          tier: Database["public"]["Enums"]["subscription_tier"]
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          expires_at?: string | null
+          id?: string
+          started_at?: string
+          status?: string
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
+          tier?: Database["public"]["Enums"]["subscription_tier"]
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          expires_at?: string | null
+          id?: string
+          started_at?: string
+          status?: string
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
+          tier?: Database["public"]["Enums"]["subscription_tier"]
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
       }
       transactions: {
         Row: {
@@ -707,6 +821,7 @@ export type Database = {
     Enums: {
       app_role: "student" | "contributor"
       question_status: "open" | "answered" | "closed"
+      subscription_tier: "free" | "basic" | "premium" | "pro"
       transaction_type: "earn" | "spend" | "withdraw" | "commission"
       verification_status: "pending" | "verified" | "rejected"
     }
@@ -838,6 +953,7 @@ export const Constants = {
     Enums: {
       app_role: ["student", "contributor"],
       question_status: ["open", "answered", "closed"],
+      subscription_tier: ["free", "basic", "premium", "pro"],
       transaction_type: ["earn", "spend", "withdraw", "commission"],
       verification_status: ["pending", "verified", "rejected"],
     },

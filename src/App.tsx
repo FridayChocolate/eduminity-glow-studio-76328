@@ -10,6 +10,8 @@ import QASection from "./pages/QASection";
 import StudyMaterials from "./pages/StudyMaterials";
 import Community from "./pages/Community";
 import Wallet from "./pages/Wallet";
+import Premium from "./pages/Premium";
+import Donate from "./pages/Donate";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,10 +28,12 @@ const App = () => (
           <Route path="/profile" element={<Profile />} />
           <Route path="/questions" element={<QASection />} />
           <Route path="/materials" element={<StudyMaterials />} />
-          <Route path="/community" element={<Community />} />
-          <Route path="/wallet" element={<Wallet />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
+        <Route path="/community" element={<Community />} />
+        <Route path="/wallet" element={<Wallet />} />
+        <Route path="/premium" element={<Premium />} />
+        <Route path="/donate" element={<Donate />} />
+        {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+        <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>

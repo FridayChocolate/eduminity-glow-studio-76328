@@ -58,6 +58,12 @@ export const Header = () => {
             >
               Community
             </button>
+            <button
+              onClick={() => navigate("/premium")}
+              className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+            >
+              Premium
+            </button>
           </nav>
         </div>
         
