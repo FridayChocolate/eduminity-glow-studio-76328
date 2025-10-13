@@ -83,22 +83,22 @@ export default function Premium() {
     <div className="min-h-screen bg-background">
       <Header />
       
-      <main className="container mx-auto px-4 py-8">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-primary to-secondary dark:from-neon-teal dark:to-neon-violet bg-clip-text text-transparent">
+      <main className="container mx-auto px-3 md:px-4 py-6 md:py-8">
+        <div className="text-center mb-8 md:mb-12">
+          <h1 className="text-3xl md:text-4xl font-bold mb-3 md:mb-4 bg-gradient-to-r from-primary to-secondary dark:from-neon-teal dark:to-neon-violet bg-clip-text text-transparent">
             Upgrade to Premium
           </h1>
-          <p className="text-muted-foreground text-lg">
+          <p className="text-muted-foreground text-base md:text-lg">
             Unlock exclusive features and support the community
           </p>
           {currentTier !== "free" && (
-            <Badge className="mt-4 text-lg px-4 py-2 bg-gradient-to-r from-primary to-secondary">
+            <Badge className="mt-4 text-sm md:text-lg px-3 md:px-4 py-1 md:py-2 bg-gradient-to-r from-primary to-secondary">
               Current Plan: {currentTier.toUpperCase()}
             </Badge>
           )}
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-12 md:mb-16">
           {/* Basic Plan */}
           <Card className={`relative overflow-hidden ${currentTier === "basic" ? "border-primary shadow-lg shadow-primary/20" : ""}`}>
             <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${tierPricing.basic.color}`}></div>

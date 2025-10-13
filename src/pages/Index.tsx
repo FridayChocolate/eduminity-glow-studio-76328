@@ -70,21 +70,23 @@ const Index = () => {
       <Header />
       
       <div className="flex">
-        <Sidebar />
+        <div className="hidden lg:block">
+          <Sidebar />
+        </div>
         
-        <main className="flex-1 p-6">
+        <main className="flex-1 p-3 md:p-6">
           <HeroSection />
 
           {/* Feature Cards */}
-          <section className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+          <section className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 mb-6 md:mb-8">
             <Card
               className="cursor-pointer hover:shadow-lg transition-all border-border/50 hover:border-neon-teal/50"
               onClick={() => navigate("/questions")}
             >
-              <CardHeader>
-                <HelpCircle className="h-8 w-8 text-neon-teal mb-2" />
-                <CardTitle>Q&A Help</CardTitle>
-                <CardDescription>Get expert answers to your academic questions</CardDescription>
+              <CardHeader className="p-3 md:p-6">
+                <HelpCircle className="h-6 w-6 md:h-8 md:w-8 text-neon-teal mb-1 md:mb-2" />
+                <CardTitle className="text-sm md:text-base">Q&A Help</CardTitle>
+                <CardDescription className="text-xs md:text-sm">Get expert answers to your academic questions</CardDescription>
               </CardHeader>
             </Card>
 
@@ -92,10 +94,10 @@ const Index = () => {
               className="cursor-pointer hover:shadow-lg transition-all border-border/50 hover:border-neon-violet/50"
               onClick={() => navigate("/materials")}
             >
-              <CardHeader>
-                <BookOpen className="h-8 w-8 text-neon-violet mb-2" />
-                <CardTitle>Study Hub</CardTitle>
-                <CardDescription>Quick summaries, notes & study guides</CardDescription>
+              <CardHeader className="p-3 md:p-6">
+                <BookOpen className="h-6 w-6 md:h-8 md:w-8 text-neon-violet mb-1 md:mb-2" />
+                <CardTitle className="text-sm md:text-base">Study Hub</CardTitle>
+                <CardDescription className="text-xs md:text-sm">Quick summaries, notes & study guides</CardDescription>
               </CardHeader>
             </Card>
 
@@ -103,18 +105,18 @@ const Index = () => {
               className="cursor-pointer hover:shadow-lg transition-all border-border/50 hover:border-neon-magenta/50"
               onClick={() => navigate("/community")}
             >
-              <CardHeader>
-                <Users className="h-8 w-8 text-neon-magenta mb-2" />
-                <CardTitle>Community</CardTitle>
-                <CardDescription>Connect with students and share knowledge</CardDescription>
+              <CardHeader className="p-3 md:p-6">
+                <Users className="h-6 w-6 md:h-8 md:w-8 text-neon-magenta mb-1 md:mb-2" />
+                <CardTitle className="text-sm md:text-base">Community</CardTitle>
+                <CardDescription className="text-xs md:text-sm">Connect with students and share knowledge</CardDescription>
               </CardHeader>
             </Card>
 
             <Card className="cursor-pointer hover:shadow-lg transition-all border-border/50 hover:border-yellow-500/50">
-              <CardHeader>
-                <Award className="h-8 w-8 text-yellow-500 mb-2" />
-                <CardTitle>Achievements</CardTitle>
-                <CardDescription>Earn badges and climb the leaderboard</CardDescription>
+              <CardHeader className="p-3 md:p-6">
+                <Award className="h-6 w-6 md:h-8 md:w-8 text-yellow-500 mb-1 md:mb-2" />
+                <CardTitle className="text-sm md:text-base">Achievements</CardTitle>
+                <CardDescription className="text-xs md:text-sm">Earn badges and climb the leaderboard</CardDescription>
               </CardHeader>
             </Card>
 
@@ -122,10 +124,10 @@ const Index = () => {
               className="cursor-pointer hover:shadow-lg transition-all border-border/50 hover:border-red-500/50"
               onClick={() => navigate("/donate")}
             >
-              <CardHeader>
-                <Heart className="h-8 w-8 text-red-500 mb-2" />
-                <CardTitle>Donate</CardTitle>
-                <CardDescription>Support students with free study materials</CardDescription>
+              <CardHeader className="p-3 md:p-6">
+                <Heart className="h-6 w-6 md:h-8 md:w-8 text-red-500 mb-1 md:mb-2" />
+                <CardTitle className="text-sm md:text-base">Donate</CardTitle>
+                <CardDescription className="text-xs md:text-sm">Support students with free study materials</CardDescription>
               </CardHeader>
             </Card>
 
@@ -133,19 +135,19 @@ const Index = () => {
               className="cursor-pointer hover:shadow-lg transition-all border-border/50 hover:border-purple-500/50"
               onClick={() => navigate("/premium")}
             >
-              <CardHeader>
-                <Crown className="h-8 w-8 text-purple-500 mb-2" />
-                <CardTitle>Premium</CardTitle>
-                <CardDescription>Upgrade for ad-free and premium features</CardDescription>
+              <CardHeader className="p-3 md:p-6">
+                <Crown className="h-6 w-6 md:h-8 md:w-8 text-purple-500 mb-1 md:mb-2" />
+                <CardTitle className="text-sm md:text-base">Premium</CardTitle>
+                <CardDescription className="text-xs md:text-sm">Upgrade for ad-free and premium features</CardDescription>
               </CardHeader>
             </Card>
           </section>
           
-          <div className="flex gap-6">
+          <div className="flex flex-col lg:flex-row gap-4 md:gap-6">
             <div className="flex-1">
-              <section id="sheets" className="mb-8">
-                <h2 className="text-2xl font-bold mb-6 dark:text-neon-teal">Study Materials</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <section id="sheets" className="mb-6 md:mb-8">
+                <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6 dark:text-neon-teal">Study Materials</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                   {studyMaterials.map((material, index) => (
                     <MaterialCard key={index} {...material} />
                   ))}
@@ -157,7 +159,7 @@ const Index = () => {
               <Footer />
             </div>
 
-            <aside className="w-80">
+            <aside className="hidden xl:block w-80">
               <LeaderboardCard />
             </aside>
           </div>

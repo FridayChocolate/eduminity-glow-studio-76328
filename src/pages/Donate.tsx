@@ -153,25 +153,25 @@ export default function Donate() {
     <div className="min-h-screen bg-background">
       <Header />
       
-      <main className="container mx-auto px-4 py-8">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-primary to-secondary dark:from-neon-teal dark:to-neon-violet bg-clip-text text-transparent">
+      <main className="container mx-auto px-3 md:px-4 py-6 md:py-8">
+        <div className="text-center mb-8 md:mb-12">
+          <h1 className="text-3xl md:text-4xl font-bold mb-3 md:mb-4 bg-gradient-to-r from-primary to-secondary dark:from-neon-teal dark:to-neon-violet bg-clip-text text-transparent">
             Support Education for All
           </h1>
-          <p className="text-muted-foreground text-lg">
+          <p className="text-muted-foreground text-base md:text-lg">
             Your donation helps students access quality study materials for free
           </p>
         </div>
 
         {/* Stats Cards */}
-        <div className="grid md:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-6 md:mb-8">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-sm font-medium">Total Donated</CardTitle>
               <Heart className="h-4 w-4 text-red-500" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">৳{stats.total.toFixed(2)}</div>
+              <div className="text-xl md:text-2xl font-bold">৳{stats.total.toFixed(2)}</div>
             </CardContent>
           </Card>
           <Card>
@@ -180,7 +180,7 @@ export default function Donate() {
               <TrendingUp className="h-4 w-4 text-green-500" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{stats.count}</div>
+              <div className="text-xl md:text-2xl font-bold">{stats.count}</div>
             </CardContent>
           </Card>
           <Card>
@@ -189,13 +189,13 @@ export default function Donate() {
               <Users className="h-4 w-4 text-blue-500" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{Math.floor(stats.total / 10)}</div>
+              <div className="text-xl md:text-2xl font-bold">{Math.floor(stats.total / 10)}</div>
               <p className="text-xs text-muted-foreground">Estimated</p>
             </CardContent>
           </Card>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
           {/* Donation Form */}
           <Card>
             <CardHeader>
