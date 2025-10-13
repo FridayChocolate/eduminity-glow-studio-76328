@@ -63,36 +63,68 @@ export const Sidebar = () => {
           <h3 className="font-semibold text-sm mb-3 text-muted-foreground">My Profile</h3>
           <nav className="space-y-1">
             {userRole === 'contributor' && (
-              <Button variant="ghost" className="w-full justify-start text-sm dark:hover:bg-neon-teal/10 dark:hover:text-neon-teal">
+              <Button 
+                variant="ghost" 
+                className="w-full justify-start text-sm dark:hover:bg-neon-teal/10 dark:hover:text-neon-teal"
+                onClick={() => navigate("/materials")}
+              >
                 <Upload className="mr-2 h-4 w-4" />
                 Upload
               </Button>
             )}
-          <Button variant="ghost" className="w-full justify-start text-sm dark:hover:bg-neon-violet/10 dark:hover:text-neon-violet">
+          <Button 
+            variant="ghost" 
+            className="w-full justify-start text-sm dark:hover:bg-neon-violet/10 dark:hover:text-neon-violet"
+            onClick={() => navigate("/profile")}
+          >
             <Settings className="mr-2 h-4 w-4" />
             Settings
           </Button>
-          <Button variant="ghost" className="w-full justify-start text-sm dark:hover:bg-neon-blue/10 dark:hover:text-neon-blue">
+          <Button 
+            variant="ghost" 
+            className="w-full justify-start text-sm dark:hover:bg-neon-blue/10 dark:hover:text-neon-blue"
+            onClick={() => navigate("/materials")}
+          >
             <Eye className="mr-2 h-4 w-4" />
             Review uploads
           </Button>
-          <Button variant="ghost" className="w-full justify-start text-sm dark:hover:bg-neon-magenta/10 dark:hover:text-neon-magenta">
+          <Button 
+            variant="ghost" 
+            className="w-full justify-start text-sm dark:hover:bg-neon-magenta/10 dark:hover:text-neon-magenta"
+            onClick={() => navigate("/materials")}
+          >
             <List className="mr-2 h-4 w-4" />
             Watchlist
           </Button>
-          <Button variant="ghost" className="w-full justify-start text-sm dark:hover:bg-neon-teal/10 dark:hover:text-neon-teal">
+          <Button 
+            variant="ghost" 
+            className="w-full justify-start text-sm dark:hover:bg-neon-teal/10 dark:hover:text-neon-teal"
+            onClick={() => navigate("/materials")}
+          >
             <Eye className="mr-2 h-4 w-4" />
             Recent views
           </Button>
-          <Button variant="ghost" className="w-full justify-start text-sm dark:hover:bg-neon-violet/10 dark:hover:text-neon-violet">
+          <Button 
+            variant="ghost" 
+            className="w-full justify-start text-sm dark:hover:bg-neon-violet/10 dark:hover:text-neon-violet"
+            onClick={() => navigate("/wallet")}
+          >
             <TrendingUp className="mr-2 h-4 w-4" />
             My sales
           </Button>
-          <Button variant="ghost" className="w-full justify-start text-sm dark:hover:bg-neon-blue/10 dark:hover:text-neon-blue">
+          <Button 
+            variant="ghost" 
+            className="w-full justify-start text-sm dark:hover:bg-neon-blue/10 dark:hover:text-neon-blue"
+            onClick={() => navigate("/wallet")}
+          >
             <DollarSign className="mr-2 h-4 w-4" />
             Balance
           </Button>
-          <Button variant="ghost" className="w-full justify-start text-sm dark:hover:bg-neon-magenta/10 dark:hover:text-neon-magenta">
+          <Button 
+            variant="ghost" 
+            className="w-full justify-start text-sm dark:hover:bg-neon-magenta/10 dark:hover:text-neon-magenta"
+            onClick={() => navigate("/wallet")}
+          >
             <Wallet className="mr-2 h-4 w-4" />
             Pending balance
           </Button>

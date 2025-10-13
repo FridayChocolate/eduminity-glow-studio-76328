@@ -1,16 +1,19 @@
-import { Moon, Sun, User, Wallet } from "lucide-react";
+import { Moon, Sun, User, Wallet, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { useTheme } from "@/hooks/useTheme";
+import { useState } from "react";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 export const Header = () => {
   const { theme, toggleTheme } = useTheme();
   const { user } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -19,6 +22,12 @@ export const Header = () => {
       description: "You have been successfully logged out.",
     });
     navigate("/");
+    setMobileMenuOpen(false);
+  };
+
+  const navigateTo = (path: string) => {
+    navigate(path);
+    setMobileMenuOpen(false);
   };
 
   return (
@@ -106,6 +115,75 @@ export const Header = () => {
           ) : (
             <Button onClick={() => navigate("/auth")} size="sm" className="text-xs md:text-sm">Get Started</Button>
           )}
+
+          {/* Mobile Menu */}
+          <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+            <SheetTrigger asChild className="lg:hidden">
+              <Button variant="ghost" size="icon">
+                <Menu className="h-5 w-5" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-[280px]">
+              <nav className="flex flex-col gap-4 mt-8">
+                <button
+                  onClick={() => navigateTo("/")}
+                  className="text-left text-base font-medium text-foreground hover:text-primary transition-colors p-2 rounded-md hover:bg-muted"
+                >
+                  Home
+                </button>
+                <button
+                  onClick={() => navigateTo("/questions")}
+                  className="text-left text-base font-medium text-foreground hover:text-primary transition-colors p-2 rounded-md hover:bg-muted"
+                >
+                  Q&A
+                </button>
+                <button
+                  onClick={() => navigateTo("/materials")}
+                  className="text-left text-base font-medium text-foreground hover:text-primary transition-colors p-2 rounded-md hover:bg-muted"
+                >
+                  Study Hub
+                </button>
+                <button
+                  onClick={() => navigateTo("/community")}
+                  className="text-left text-base font-medium text-foreground hover:text-primary transition-colors p-2 rounded-md hover:bg-muted"
+                >
+                  Community
+                </button>
+                <button
+                  onClick={() => navigateTo("/premium")}
+                  className="text-left text-base font-medium text-foreground hover:text-primary transition-colors p-2 rounded-md hover:bg-muted"
+                >
+                  Premium
+                </button>
+                <button
+                  onClick={() => navigateTo("/donate")}
+                  className="text-left text-base font-medium text-foreground hover:text-primary transition-colors p-2 rounded-md hover:bg-muted"
+                >
+                  Donate
+                </button>
+                {user && (
+                  <>
+                    <div className="border-t border-border my-2" />
+                    <button
+                      onClick={() => navigateTo("/wallet")}
+                      className="text-left text-base font-medium text-foreground hover:text-primary transition-colors p-2 rounded-md hover:bg-muted"
+                    >
+                      Wallet
+                    </button>
+                    <button
+                      onClick={() => navigateTo("/profile")}
+                      className="text-left text-base font-medium text-foreground hover:text-primary transition-colors p-2 rounded-md hover:bg-muted"
+                    >
+                      Profile
+                    </button>
+                    <Button variant="outline" onClick={handleLogout} className="justify-start">
+                      Logout
+                    </Button>
+                  </>
+                )}
+              </nav>
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
     </header>
