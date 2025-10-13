@@ -34,12 +34,8 @@ export default function Donate() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (!user) {
-      navigate("/auth");
-      return;
-    }
     fetchDonations();
-  }, [user, navigate]);
+  }, []);
 
   const fetchDonations = async () => {
     try {
@@ -61,7 +57,17 @@ export default function Donate() {
   };
 
   const handleDonate = async () => {
-    if (!user || !amount || parseFloat(amount) <= 0) {
+    if (!user) {
+      toast({
+        title: "Login Required",
+        description: "Please login to make a donation.",
+        variant: "destructive",
+      });
+      navigate("/auth");
+      return;
+    }
+    
+    if (!amount || parseFloat(amount) <= 0) {
       toast({
         title: "Invalid Amount",
         description: "Please enter a valid donation amount.",
@@ -230,10 +236,15 @@ export default function Donate() {
                   Donate anonymously
                 </Label>
               </div>
-              <Button onClick={handleDonate} className="w-full" disabled={loading}>
+              <Button onClick={handleDonate} className="w-full" disabled={loading || !user}>
                 <Heart className="h-4 w-4 mr-2" />
-                {loading ? "Processing..." : "Donate Now"}
+                {loading ? "Processing..." : !user ? "Login to Donate" : "Donate Now"}
               </Button>
+              {!user && (
+                <p className="text-sm text-muted-foreground text-center">
+                  You need to be logged in to make a donation
+                </p>
+              )}
             </CardContent>
           </Card>
 

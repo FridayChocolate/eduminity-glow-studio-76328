@@ -8,7 +8,7 @@ import { WorkCommunity } from "@/components/WorkCommunity";
 import { Footer } from "@/components/Footer";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { BookOpen, HelpCircle, Users, Award } from "lucide-react";
+import { BookOpen, HelpCircle, Users, Award, Heart, Crown } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const Index = () => {
@@ -76,7 +76,7 @@ const Index = () => {
           <HeroSection />
 
           {/* Feature Cards */}
-          <section className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          <section className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
             <Card
               className="cursor-pointer hover:shadow-lg transition-all border-border/50 hover:border-neon-teal/50"
               onClick={() => navigate("/questions")}
@@ -115,6 +115,28 @@ const Index = () => {
                 <Award className="h-8 w-8 text-yellow-500 mb-2" />
                 <CardTitle>Achievements</CardTitle>
                 <CardDescription>Earn badges and climb the leaderboard</CardDescription>
+              </CardHeader>
+            </Card>
+
+            <Card
+              className="cursor-pointer hover:shadow-lg transition-all border-border/50 hover:border-red-500/50"
+              onClick={() => navigate("/donate")}
+            >
+              <CardHeader>
+                <Heart className="h-8 w-8 text-red-500 mb-2" />
+                <CardTitle>Donate</CardTitle>
+                <CardDescription>Support students with free study materials</CardDescription>
+              </CardHeader>
+            </Card>
+
+            <Card
+              className="cursor-pointer hover:shadow-lg transition-all border-border/50 hover:border-purple-500/50"
+              onClick={() => navigate("/premium")}
+            >
+              <CardHeader>
+                <Crown className="h-8 w-8 text-purple-500 mb-2" />
+                <CardTitle>Premium</CardTitle>
+                <CardDescription>Upgrade for ad-free and premium features</CardDescription>
               </CardHeader>
             </Card>
           </section>

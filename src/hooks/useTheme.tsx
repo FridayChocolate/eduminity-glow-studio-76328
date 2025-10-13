@@ -1,18 +1,24 @@
 import { useEffect, useState } from "react";
 
 export const useTheme = () => {
-  const [theme, setTheme] = useState<"light" | "dark">("dark");
+  const [theme, setTheme] = useState<"light" | "dark">(() => {
+    const stored = localStorage.getItem("theme");
+    return (stored as "light" | "dark") || "dark";
+  });
 
   useEffect(() => {
     const root = window.document.documentElement;
-    const initialTheme = root.classList.contains("dark") ? "dark" : "light";
+    const stored = localStorage.getItem("theme");
     
-    // Set dark mode as default if no theme is set
-    if (!root.classList.contains("dark") && !root.classList.contains("light")) {
+    // Set dark mode as default if no theme is stored
+    if (!stored) {
       root.classList.add("dark");
+      localStorage.setItem("theme", "dark");
       setTheme("dark");
     } else {
-      setTheme(initialTheme);
+      root.classList.remove("light", "dark");
+      root.classList.add(stored);
+      setTheme(stored as "light" | "dark");
     }
   }, []);
 
@@ -22,6 +28,7 @@ export const useTheme = () => {
     
     root.classList.remove("light", "dark");
     root.classList.add(newTheme);
+    localStorage.setItem("theme", newTheme);
     setTheme(newTheme);
   };
 
