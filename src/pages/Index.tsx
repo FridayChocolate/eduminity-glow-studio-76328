@@ -5,11 +5,10 @@ import { MaterialCard } from "@/components/MaterialCard";
 import { LeaderboardCard } from "@/components/LeaderboardCard";
 import { CommunitySection } from "@/components/CommunitySection";
 import { WorkCommunity } from "@/components/WorkCommunity";
-import { ContributorsSection } from "@/components/ContributorsSection";
 import { Footer } from "@/components/Footer";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { BookOpen, HelpCircle, Users, Heart, Crown } from "lucide-react";
+import { BookOpen, HelpCircle, Users, Award, Heart, Crown } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const Index = () => {
@@ -113,6 +112,14 @@ const Index = () => {
               </CardHeader>
             </Card>
 
+            <Card className="cursor-pointer hover:shadow-lg transition-all border-border/50 hover:border-yellow-500/50">
+              <CardHeader className="p-3 md:p-6">
+                <Award className="h-6 w-6 md:h-8 md:w-8 text-yellow-500 mb-1 md:mb-2" />
+                <CardTitle className="text-sm md:text-base">Achievements</CardTitle>
+                <CardDescription className="text-xs md:text-sm">Earn badges and climb the leaderboard</CardDescription>
+              </CardHeader>
+            </Card>
+
             <Card
               className="cursor-pointer hover:shadow-lg transition-all border-border/50 hover:border-red-500/50"
               onClick={() => navigate("/donate")}
@@ -147,7 +154,6 @@ const Index = () => {
                 </div>
               </section>
 
-              <ContributorsSection />
               <WorkCommunity />
               <CommunitySection />
               <Footer />
