@@ -10,8 +10,9 @@ import { Card } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, Upload, ArrowLeft } from "lucide-react";
+import { Loader2, Upload, ArrowLeft, Award, Trophy, Star } from "lucide-react";
 import { Header } from "@/components/Header";
+import { Badge } from "@/components/ui/badge";
 
 const Profile = () => {
   const { user } = useAuth();
@@ -216,6 +217,60 @@ const Profile = () => {
                 {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 Save Profile
               </Button>
+            </div>
+          </Card>
+
+          {/* Achievements Section */}
+          <Card className="p-6 bg-gradient-card dark:border-neon-teal/30 dark:shadow-glow-teal mt-6">
+            <div className="flex items-center gap-2 mb-6">
+              <Award className="h-6 w-6 text-neon-teal" />
+              <h2 className="text-2xl font-bold dark:text-neon-teal">Achievements & Badges</h2>
+            </div>
+            
+            <div className="space-y-6">
+              {/* Leaderboard Position */}
+              <div className="flex items-center justify-between p-4 bg-muted/30 dark:bg-muted/20 rounded-lg">
+                <div className="flex items-center gap-3">
+                  <Trophy className="h-8 w-8 text-accent dark:text-neon-violet" />
+                  <div>
+                    <p className="font-semibold">Leaderboard Position</p>
+                    <p className="text-sm text-muted-foreground dark:text-foreground/60">Your current rank</p>
+                  </div>
+                </div>
+                <Badge variant="secondary" className="text-lg px-4 py-2">
+                  #--
+                </Badge>
+              </div>
+
+              {/* Points Summary */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="p-4 bg-muted/30 dark:bg-muted/20 rounded-lg text-center">
+                  <Star className="h-6 w-6 text-neon-teal mx-auto mb-2" />
+                  <p className="text-2xl font-bold">0</p>
+                  <p className="text-sm text-muted-foreground dark:text-foreground/60">Total Points</p>
+                </div>
+                <div className="p-4 bg-muted/30 dark:bg-muted/20 rounded-lg text-center">
+                  <Award className="h-6 w-6 text-neon-magenta mx-auto mb-2" />
+                  <p className="text-2xl font-bold">0</p>
+                  <p className="text-sm text-muted-foreground dark:text-foreground/60">Badges Earned</p>
+                </div>
+                <div className="p-4 bg-muted/30 dark:bg-muted/20 rounded-lg text-center">
+                  <Trophy className="h-6 w-6 text-neon-violet mx-auto mb-2" />
+                  <p className="text-2xl font-bold">0</p>
+                  <p className="text-sm text-muted-foreground dark:text-foreground/60">Contributions</p>
+                </div>
+              </div>
+
+              {/* Earned Badges */}
+              <div>
+                <h3 className="font-semibold mb-3">Earned Badges</h3>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  <div className="p-3 bg-muted/20 dark:bg-muted/10 rounded-lg text-center opacity-50">
+                    <Award className="h-8 w-8 mx-auto mb-2 text-muted-foreground" />
+                    <p className="text-xs text-muted-foreground">No badges yet</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </Card>
         </div>
