@@ -1,16 +1,15 @@
-import { Moon, Sun, User, Wallet, Menu, X } from "lucide-react";
+import { User, Wallet, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { useTheme } from "@/hooks/useTheme";
 import { useState } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { FontSelector } from "@/components/FontSelector";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export const Header = () => {
-  const { theme, toggleTheme } = useTheme();
   const { user } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -101,18 +100,8 @@ export const Header = () => {
           {/* Font Selector */}
           <FontSelector />
           
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={toggleTheme}
-            className="hover:bg-muted dark:hover:shadow-glow-teal transition-all"
-          >
-            {theme === "dark" ? (
-              <Sun className="h-5 w-5 text-neon-teal" />
-            ) : (
-              <Moon className="h-5 w-5" />
-            )}
-          </Button>
+          {/* Theme Toggle */}
+          <ThemeToggle />
 
           {user ? (
             <>
