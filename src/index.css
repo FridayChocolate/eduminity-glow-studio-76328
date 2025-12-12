@@ -95,9 +95,19 @@ All colors MUST be HSL.
 @layer base {
   * {
     @apply border-border;
+    font-family: inherit;
+  }
+
+  html {
+    font-family: var(--font-family, 'Inter', sans-serif);
   }
 
   body {
     @apply bg-background text-foreground;
+    font-family: inherit;
+  }
+
+  h1, h2, h3, h4, h5, h6, p, span, a, button, input, textarea, select, label, div {
+    font-family: inherit;
   }
 }

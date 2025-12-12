@@ -55,8 +55,21 @@ export const FontProvider = ({ children }: { children: ReactNode }) => {
   const currentFontFamily = fontOptions.find(f => f.id === font)?.family || fontOptions[0].family;
 
   useEffect(() => {
+    // Apply font to CSS variable and html element for global inheritance
     document.documentElement.style.setProperty("--font-family", currentFontFamily);
+    document.documentElement.style.fontFamily = currentFontFamily;
     document.body.style.fontFamily = currentFontFamily;
+    
+    // Force all elements to inherit the font
+    const style = document.getElementById('dynamic-font-style') || document.createElement('style');
+    style.id = 'dynamic-font-style';
+    style.textContent = `
+      * { font-family: ${currentFontFamily} !important; }
+      code, pre, .font-mono { font-family: 'JetBrains Mono', monospace !important; }
+    `;
+    if (!document.getElementById('dynamic-font-style')) {
+      document.head.appendChild(style);
+    }
   }, [currentFontFamily]);
 
   return (
