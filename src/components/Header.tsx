@@ -7,6 +7,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useTheme } from "@/hooks/useTheme";
 import { useState } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { FontSelector } from "@/components/FontSelector";
 
 export const Header = () => {
   const { theme, toggleTheme } = useTheme();
@@ -96,7 +97,10 @@ export const Header = () => {
           </nav>
         </div>
         
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1 md:gap-2">
+          {/* Font Selector */}
+          <FontSelector />
+          
           <Button
             variant="ghost"
             size="icon"
