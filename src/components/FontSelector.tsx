@@ -1,4 +1,4 @@
-import { Type, Sparkles, BookOpen, Cpu } from "lucide-react";
+import { Type, Sparkles, BookOpen, Cpu, RotateCcw } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { useFont, fontOptions, FontStyle } from "@/hooks/useFont";
+import { useFont, fontOptions } from "@/hooks/useFont";
 import { cn } from "@/lib/utils";
 
 const categoryIcons = {
@@ -26,9 +26,10 @@ const categoryLabels = {
 export const FontSelector = () => {
   const { font, setFont } = useFont();
 
+  const defaultFont = fontOptions.find(f => f.id === "default")!;
   const sciFiFonts = fontOptions.filter(f => f.category === "sci-fi");
   const classicFonts = fontOptions.filter(f => f.category === "classic");
-  const modernFonts = fontOptions.filter(f => f.category === "modern");
+  const modernFonts = fontOptions.filter(f => f.category === "modern" && f.id !== "default");
 
   const renderFontItem = (fontOption: typeof fontOptions[0]) => {
     const isActive = font === fontOption.id;
@@ -72,6 +73,27 @@ export const FontSelector = () => {
         align="end" 
         className="w-56 max-h-[400px] overflow-y-auto bg-popover border border-border z-50"
       >
+        {/* Default Option */}
+        <DropdownMenuItem
+          onClick={() => setFont("default")}
+          className={cn(
+            "flex items-center gap-3 cursor-pointer py-3 px-4",
+            font === "default" && "bg-primary/10 border-l-2 border-primary"
+          )}
+        >
+          <RotateCcw className="h-4 w-4 text-muted-foreground" />
+          <div className="flex flex-col">
+            <span className="font-medium text-foreground" style={{ fontFamily: defaultFont.family }}>
+              Default (Inter)
+            </span>
+            <span className="text-xs text-muted-foreground">
+              System default font
+            </span>
+          </div>
+        </DropdownMenuItem>
+        
+        <DropdownMenuSeparator />
+        
         {/* Sci-Fi Section */}
         <DropdownMenuLabel className="flex items-center gap-2 text-neon-teal">
           <Cpu className="h-4 w-4" />
