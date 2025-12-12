@@ -36,11 +36,31 @@ export const Header = () => {
         <div className="flex items-center gap-4 md:gap-8">
           <button 
             onClick={() => navigate("/")}
-            className="flex items-center gap-2 bg-transparent border-0 p-0 cursor-pointer"
+            className="flex items-center gap-2 bg-transparent border-0 p-0 cursor-pointer group"
           >
-            <span className="text-xl md:text-2xl font-bold bg-gradient-to-r from-primary to-secondary dark:from-neon-teal dark:to-neon-violet bg-clip-text text-transparent dark:animate-glow-pulse">
-              Eduminity
-            </span>
+            {/* Sci-Fi Logo with Neon Glow */}
+            <div className="relative flex items-center">
+              {/* Hexagonal Icon */}
+              <div className="relative w-8 h-8 md:w-10 md:h-10 mr-2">
+                <div className="absolute inset-0 bg-gradient-to-br from-cyan-400 via-violet-500 to-fuchsia-500 clip-hexagon animate-pulse opacity-80" 
+                     style={{ clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' }} />
+                <div className="absolute inset-[2px] bg-background clip-hexagon flex items-center justify-center"
+                     style={{ clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' }}>
+                  <span className="text-xs md:text-sm font-black bg-gradient-to-r from-cyan-400 via-violet-400 to-fuchsia-400 bg-clip-text text-transparent">E</span>
+                </div>
+                {/* Glow effect */}
+                <div className="absolute inset-0 blur-md bg-gradient-to-br from-cyan-400/50 via-violet-500/50 to-fuchsia-500/50 -z-10 group-hover:blur-lg transition-all"
+                     style={{ clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' }} />
+              </div>
+              {/* Text with neon effect */}
+              <div className="relative">
+                <span className="text-xl md:text-2xl font-black tracking-wider bg-gradient-to-r from-cyan-400 via-violet-400 to-fuchsia-400 bg-clip-text text-transparent drop-shadow-[0_0_10px_rgba(34,211,238,0.5)] group-hover:drop-shadow-[0_0_20px_rgba(34,211,238,0.8)] transition-all duration-300">
+                  EDUMINITY
+                </span>
+                {/* Underline glow */}
+                <div className="absolute -bottom-1 left-0 right-0 h-[2px] bg-gradient-to-r from-cyan-400 via-violet-500 to-fuchsia-500 opacity-70 group-hover:opacity-100 shadow-[0_0_10px_rgba(34,211,238,0.8)] transition-opacity" />
+              </div>
+            </div>
           </button>
           <nav className="hidden lg:flex gap-6">
             <button
