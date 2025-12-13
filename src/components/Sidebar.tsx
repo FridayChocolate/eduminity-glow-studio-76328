@@ -1,4 +1,4 @@
-import { Upload, Settings, Eye, List, TrendingUp, DollarSign, Wallet, LogOut, UserPlus, User } from "lucide-react";
+import { Upload, Settings, Eye, List, TrendingUp, DollarSign, Wallet, LogOut, UserPlus, User, Feather } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -62,6 +62,14 @@ export const Sidebar = () => {
         <Card className="p-4 bg-gradient-card dark:border-neon-violet/30 dark:shadow-glow-violet">
           <h3 className="font-semibold text-sm mb-3 text-muted-foreground">My Profile</h3>
           <nav className="space-y-1">
+            <Button 
+              variant="ghost" 
+              className="w-full justify-start text-sm dark:hover:bg-neon-violet/10 dark:hover:text-neon-violet"
+              onClick={() => navigate("/write")}
+            >
+              <Feather className="mr-2 h-4 w-4" />
+              Write Stories
+            </Button>
             {userRole === 'contributor' && (
               <Button 
                 variant="ghost" 
