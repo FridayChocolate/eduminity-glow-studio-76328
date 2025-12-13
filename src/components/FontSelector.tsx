@@ -83,11 +83,17 @@ export const FontSelector = () => {
         >
           <RotateCcw className="h-4 w-4 text-muted-foreground" />
           <div className="flex flex-col">
-            <span className="font-medium text-foreground" style={{ fontFamily: defaultFont.family }}>
+            <span 
+              className="font-medium text-foreground" 
+              style={{ fontFamily: defaultFont.family }}
+            >
               Default (Inter)
             </span>
-            <span className="text-xs text-muted-foreground">
-              System default font
+            <span 
+              className="text-xs text-muted-foreground"
+              style={{ fontFamily: defaultFont.family }}
+            >
+              {defaultFont.preview}
             </span>
           </div>
         </DropdownMenuItem>
