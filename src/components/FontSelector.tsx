@@ -42,6 +42,7 @@ export const FontSelector = () => {
           isActive && "bg-primary/10 border-l-2 border-primary",
           isHovered && !isActive && "bg-accent/50"
         )}
+        data-font-preview="true"
       >
         <div className="flex items-center justify-between w-full">
           <span 
@@ -100,6 +101,7 @@ export const FontSelector = () => {
             font === "default" && "bg-primary/10 border-l-2 border-primary",
             previewFont === "default" && font !== "default" && "bg-accent/50"
           )}
+          data-font-preview="true"
         >
           <RotateCcw className="h-4 w-4 text-muted-foreground" />
           <div className="flex flex-col flex-1">
