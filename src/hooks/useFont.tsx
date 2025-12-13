@@ -60,11 +60,11 @@ export const FontProvider = ({ children }: { children: ReactNode }) => {
     document.documentElement.style.fontFamily = currentFontFamily;
     document.body.style.fontFamily = currentFontFamily;
     
-    // Force all elements to inherit the font
+    // Force all elements to inherit the font, except preview elements
     const style = document.getElementById('dynamic-font-style') || document.createElement('style');
     style.id = 'dynamic-font-style';
     style.textContent = `
-      * { font-family: ${currentFontFamily} !important; }
+      *:not([data-font-preview]):not([data-font-preview] *) { font-family: ${currentFontFamily} !important; }
       code, pre, .font-mono { font-family: 'JetBrains Mono', monospace !important; }
     `;
     if (!document.getElementById('dynamic-font-style')) {
