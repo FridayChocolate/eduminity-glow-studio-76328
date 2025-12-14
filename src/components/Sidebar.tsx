@@ -1,4 +1,4 @@
-import { Upload, Settings, Eye, List, TrendingUp, DollarSign, Wallet, LogOut, UserPlus, User, Feather } from "lucide-react";
+import { Upload, Settings, Eye, List, TrendingUp, DollarSign, Wallet, LogOut, UserPlus, User, Feather, LayoutDashboard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -64,6 +64,14 @@ export const Sidebar = () => {
           <nav className="space-y-1">
             <Button 
               variant="ghost" 
+              className="w-full justify-start text-sm dark:hover:bg-neon-teal/10 dark:hover:text-neon-teal"
+              onClick={() => navigate("/dashboard")}
+            >
+              <LayoutDashboard className="mr-2 h-4 w-4" />
+              Dashboard
+            </Button>
+            <Button 
+              variant="ghost" 
               className="w-full justify-start text-sm dark:hover:bg-neon-violet/10 dark:hover:text-neon-violet"
               onClick={() => navigate("/write")}
             >
@@ -80,62 +88,62 @@ export const Sidebar = () => {
                 Upload
               </Button>
             )}
-          <Button 
-            variant="ghost" 
-            className="w-full justify-start text-sm dark:hover:bg-neon-violet/10 dark:hover:text-neon-violet"
-            onClick={() => navigate("/profile")}
-          >
-            <Settings className="mr-2 h-4 w-4" />
-            Settings
-          </Button>
-          <Button 
-            variant="ghost" 
-            className="w-full justify-start text-sm dark:hover:bg-neon-blue/10 dark:hover:text-neon-blue"
-            onClick={() => navigate("/materials")}
-          >
-            <Eye className="mr-2 h-4 w-4" />
-            Review uploads
-          </Button>
-          <Button 
-            variant="ghost" 
-            className="w-full justify-start text-sm dark:hover:bg-neon-magenta/10 dark:hover:text-neon-magenta"
-            onClick={() => navigate("/materials")}
-          >
-            <List className="mr-2 h-4 w-4" />
-            Watchlist
-          </Button>
-          <Button 
-            variant="ghost" 
-            className="w-full justify-start text-sm dark:hover:bg-neon-teal/10 dark:hover:text-neon-teal"
-            onClick={() => navigate("/materials")}
-          >
-            <Eye className="mr-2 h-4 w-4" />
-            Recent views
-          </Button>
-          <Button 
-            variant="ghost" 
-            className="w-full justify-start text-sm dark:hover:bg-neon-violet/10 dark:hover:text-neon-violet"
-            onClick={() => navigate("/wallet")}
-          >
-            <TrendingUp className="mr-2 h-4 w-4" />
-            My sales
-          </Button>
-          <Button 
-            variant="ghost" 
-            className="w-full justify-start text-sm dark:hover:bg-neon-blue/10 dark:hover:text-neon-blue"
-            onClick={() => navigate("/wallet")}
-          >
-            <DollarSign className="mr-2 h-4 w-4" />
-            Balance
-          </Button>
-          <Button 
-            variant="ghost" 
-            className="w-full justify-start text-sm dark:hover:bg-neon-magenta/10 dark:hover:text-neon-magenta"
-            onClick={() => navigate("/wallet")}
-          >
-            <Wallet className="mr-2 h-4 w-4" />
-            Pending balance
-          </Button>
+            <Button 
+              variant="ghost" 
+              className="w-full justify-start text-sm dark:hover:bg-neon-violet/10 dark:hover:text-neon-violet"
+              onClick={() => navigate("/profile")}
+            >
+              <Settings className="mr-2 h-4 w-4" />
+              Settings
+            </Button>
+            <Button 
+              variant="ghost" 
+              className="w-full justify-start text-sm dark:hover:bg-neon-blue/10 dark:hover:text-neon-blue"
+              onClick={() => navigate("/materials")}
+            >
+              <Eye className="mr-2 h-4 w-4" />
+              Review uploads
+            </Button>
+            <Button 
+              variant="ghost" 
+              className="w-full justify-start text-sm dark:hover:bg-neon-magenta/10 dark:hover:text-neon-magenta"
+              onClick={() => navigate("/materials")}
+            >
+              <List className="mr-2 h-4 w-4" />
+              Watchlist
+            </Button>
+            <Button 
+              variant="ghost" 
+              className="w-full justify-start text-sm dark:hover:bg-neon-teal/10 dark:hover:text-neon-teal"
+              onClick={() => navigate("/materials")}
+            >
+              <Eye className="mr-2 h-4 w-4" />
+              Recent views
+            </Button>
+            <Button 
+              variant="ghost" 
+              className="w-full justify-start text-sm dark:hover:bg-neon-violet/10 dark:hover:text-neon-violet"
+              onClick={() => navigate("/wallet")}
+            >
+              <TrendingUp className="mr-2 h-4 w-4" />
+              My sales
+            </Button>
+            <Button 
+              variant="ghost" 
+              className="w-full justify-start text-sm dark:hover:bg-neon-blue/10 dark:hover:text-neon-blue"
+              onClick={() => navigate("/wallet")}
+            >
+              <DollarSign className="mr-2 h-4 w-4" />
+              Balance
+            </Button>
+            <Button 
+              variant="ghost" 
+              className="w-full justify-start text-sm dark:hover:bg-neon-magenta/10 dark:hover:text-neon-magenta"
+              onClick={() => navigate("/wallet")}
+            >
+              <Wallet className="mr-2 h-4 w-4" />
+              Pending balance
+            </Button>
           </nav>
         </Card>
       )}
