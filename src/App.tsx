@@ -7,6 +7,7 @@ import { ChatBot } from "@/components/ChatBot";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import Profile from "./pages/Profile";
+import Dashboard from "./pages/Dashboard";
 import QASection from "./pages/QASection";
 import StudyMaterials from "./pages/StudyMaterials";
 import Community from "./pages/Community";
@@ -28,6 +29,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/questions" element={<QASection />} />
           <Route path="/materials" element={<StudyMaterials />} />
           <Route path="/community" element={<Community />} />

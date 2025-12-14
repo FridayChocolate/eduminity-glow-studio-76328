@@ -1,13 +1,15 @@
 import { Header } from "@/components/Header";
 import { Sidebar } from "@/components/Sidebar";
 import { HeroSection } from "@/components/HeroSection";
+import { SocialProofStrip } from "@/components/SocialProofStrip";
+import { TrendingSection } from "@/components/TrendingSection";
+import { SuccessStoryCard } from "@/components/SuccessStoryCard";
 import { MaterialCard } from "@/components/MaterialCard";
 import { LeaderboardCard } from "@/components/LeaderboardCard";
 import { CommunitySection } from "@/components/CommunitySection";
 import { WorkCommunity } from "@/components/WorkCommunity";
 import { Footer } from "@/components/Footer";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { BookOpen, HelpCircle, Users, Award, Heart, Crown } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -76,6 +78,9 @@ const Index = () => {
         
         <main className="flex-1 p-3 md:p-6">
           <HeroSection />
+          <SocialProofStrip />
+          <TrendingSection />
+          <SuccessStoryCard />
 
           {/* Feature Cards */}
           <section className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 mb-6 md:mb-8">
