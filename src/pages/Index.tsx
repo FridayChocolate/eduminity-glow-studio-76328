@@ -12,6 +12,7 @@ import { Footer } from "@/components/Footer";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { BookOpen, HelpCircle, Users, Award, Heart, Crown } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { ScrollReveal } from "@/hooks/useScrollReveal";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -67,6 +68,15 @@ const Index = () => {
     },
   ];
 
+  const featureCards = [
+    { icon: HelpCircle, title: "Q&A Help", description: "Get expert answers to your academic questions", color: "neon-teal", route: "/questions" },
+    { icon: BookOpen, title: "Study Hub", description: "Quick summaries, notes & study guides", color: "neon-violet", route: "/materials" },
+    { icon: Users, title: "Community", description: "Connect with students and share knowledge", color: "neon-magenta", route: "/community" },
+    { icon: Award, title: "Achievements", description: "Earn badges and climb the leaderboard", color: "yellow-500", route: null },
+    { icon: Heart, title: "Donate", description: "Support students with free study materials", color: "red-500", route: "/donate" },
+    { icon: Crown, title: "Premium", description: "Upgrade for ad-free and premium features", color: "purple-500", route: "/premium" },
+  ];
+
   return (
     <div className="min-h-screen bg-background font-['Inter']">
       <Header />
@@ -77,95 +87,74 @@ const Index = () => {
         </div>
         
         <main className="flex-1 p-3 md:p-6">
-          <HeroSection />
-          <SocialProofStrip />
-          <TrendingSection />
-          <SuccessStoryCard />
+          <ScrollReveal>
+            <HeroSection />
+          </ScrollReveal>
+          
+          <ScrollReveal delay={100}>
+            <SocialProofStrip />
+          </ScrollReveal>
+          
+          <ScrollReveal delay={150}>
+            <TrendingSection />
+          </ScrollReveal>
+          
+          <ScrollReveal delay={200}>
+            <SuccessStoryCard />
+          </ScrollReveal>
 
           {/* Feature Cards */}
-          <section className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 mb-6 md:mb-8">
-            <Card
-              className="cursor-pointer hover:shadow-lg transition-all border-border/50 hover:border-neon-teal/50"
-              onClick={() => navigate("/questions")}
-            >
-              <CardHeader className="p-3 md:p-6">
-                <HelpCircle className="h-6 w-6 md:h-8 md:w-8 text-neon-teal mb-1 md:mb-2" />
-                <CardTitle className="text-sm md:text-base">Q&A Help</CardTitle>
-                <CardDescription className="text-xs md:text-sm">Get expert answers to your academic questions</CardDescription>
-              </CardHeader>
-            </Card>
-
-            <Card
-              className="cursor-pointer hover:shadow-lg transition-all border-border/50 hover:border-neon-violet/50"
-              onClick={() => navigate("/materials")}
-            >
-              <CardHeader className="p-3 md:p-6">
-                <BookOpen className="h-6 w-6 md:h-8 md:w-8 text-neon-violet mb-1 md:mb-2" />
-                <CardTitle className="text-sm md:text-base">Study Hub</CardTitle>
-                <CardDescription className="text-xs md:text-sm">Quick summaries, notes & study guides</CardDescription>
-              </CardHeader>
-            </Card>
-
-            <Card
-              className="cursor-pointer hover:shadow-lg transition-all border-border/50 hover:border-neon-magenta/50"
-              onClick={() => navigate("/community")}
-            >
-              <CardHeader className="p-3 md:p-6">
-                <Users className="h-6 w-6 md:h-8 md:w-8 text-neon-magenta mb-1 md:mb-2" />
-                <CardTitle className="text-sm md:text-base">Community</CardTitle>
-                <CardDescription className="text-xs md:text-sm">Connect with students and share knowledge</CardDescription>
-              </CardHeader>
-            </Card>
-
-            <Card className="cursor-pointer hover:shadow-lg transition-all border-border/50 hover:border-yellow-500/50">
-              <CardHeader className="p-3 md:p-6">
-                <Award className="h-6 w-6 md:h-8 md:w-8 text-yellow-500 mb-1 md:mb-2" />
-                <CardTitle className="text-sm md:text-base">Achievements</CardTitle>
-                <CardDescription className="text-xs md:text-sm">Earn badges and climb the leaderboard</CardDescription>
-              </CardHeader>
-            </Card>
-
-            <Card
-              className="cursor-pointer hover:shadow-lg transition-all border-border/50 hover:border-red-500/50"
-              onClick={() => navigate("/donate")}
-            >
-              <CardHeader className="p-3 md:p-6">
-                <Heart className="h-6 w-6 md:h-8 md:w-8 text-red-500 mb-1 md:mb-2" />
-                <CardTitle className="text-sm md:text-base">Donate</CardTitle>
-                <CardDescription className="text-xs md:text-sm">Support students with free study materials</CardDescription>
-              </CardHeader>
-            </Card>
-
-            <Card
-              className="cursor-pointer hover:shadow-lg transition-all border-border/50 hover:border-purple-500/50"
-              onClick={() => navigate("/premium")}
-            >
-              <CardHeader className="p-3 md:p-6">
-                <Crown className="h-6 w-6 md:h-8 md:w-8 text-purple-500 mb-1 md:mb-2" />
-                <CardTitle className="text-sm md:text-base">Premium</CardTitle>
-                <CardDescription className="text-xs md:text-sm">Upgrade for ad-free and premium features</CardDescription>
-              </CardHeader>
-            </Card>
-          </section>
+          <ScrollReveal delay={250}>
+            <section className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 mb-6 md:mb-8">
+              {featureCards.map((card, index) => (
+                <Card
+                  key={index}
+                  className={`cursor-pointer hover:shadow-lg transition-all duration-300 border-border/50 hover:border-${card.color}/50 hover:-translate-y-1 group`}
+                  onClick={() => card.route && navigate(card.route)}
+                  style={{ 
+                    animationDelay: `${index * 50}ms`,
+                  }}
+                >
+                  <CardHeader className="p-3 md:p-6">
+                    <card.icon className={`h-6 w-6 md:h-8 md:w-8 text-${card.color} mb-1 md:mb-2 transition-transform duration-300 group-hover:scale-110`} />
+                    <CardTitle className="text-sm md:text-base">{card.title}</CardTitle>
+                    <CardDescription className="text-xs md:text-sm">{card.description}</CardDescription>
+                  </CardHeader>
+                </Card>
+              ))}
+            </section>
+          </ScrollReveal>
           
           <div className="flex flex-col lg:flex-row gap-4 md:gap-6">
             <div className="flex-1">
-              <section id="sheets" className="mb-6 md:mb-8">
-                <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6 dark:text-neon-teal">Study Materials</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-                  {studyMaterials.map((material, index) => (
-                    <MaterialCard key={index} {...material} />
-                  ))}
-                </div>
-              </section>
+              <ScrollReveal>
+                <section id="sheets" className="mb-6 md:mb-8">
+                  <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6 dark:text-neon-teal">Study Materials</h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                    {studyMaterials.map((material, index) => (
+                      <ScrollReveal key={index} delay={index * 100}>
+                        <MaterialCard {...material} />
+                      </ScrollReveal>
+                    ))}
+                  </div>
+                </section>
+              </ScrollReveal>
 
-              <WorkCommunity />
-              <CommunitySection />
+              <ScrollReveal>
+                <WorkCommunity />
+              </ScrollReveal>
+              
+              <ScrollReveal>
+                <CommunitySection />
+              </ScrollReveal>
+              
               <Footer />
             </div>
 
             <aside className="hidden xl:block w-80">
-              <LeaderboardCard />
+              <ScrollReveal direction="left">
+                <LeaderboardCard />
+              </ScrollReveal>
             </aside>
           </div>
         </main>
