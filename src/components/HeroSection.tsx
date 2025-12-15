@@ -1,10 +1,20 @@
 import { Button } from "@/components/ui/button";
-import { Upload, BookOpen } from "lucide-react";
+import { Upload, BookOpen, Users, CheckCircle2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import heroImage from "@/assets/hero-bg.jpg";
+import { useState, useEffect } from "react";
 
 export const HeroSection = () => {
   const navigate = useNavigate();
+  const [onlineCount, setOnlineCount] = useState(128);
+
+  // Simulate live counter
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setOnlineCount(prev => prev + Math.floor(Math.random() * 3) - 1);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <section className="relative overflow-hidden rounded-xl mb-6 md:mb-8 bg-gradient-hero dark:shadow-glow-teal">
@@ -13,16 +23,29 @@ export const HeroSection = () => {
         style={{ backgroundImage: `url(${heroImage})` }}
       />
       <div className="relative z-10 flex flex-col items-center justify-center py-12 md:py-20 text-center px-4 md:px-6">
+        {/* Authority Badge */}
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-neon-teal/10 border border-neon-teal/30 mb-4 animate-fade-in">
+          <Users className="h-3.5 w-3.5 text-neon-teal" />
+          <span className="text-xs font-medium text-neon-teal">Built for students • By students</span>
+        </div>
+
         <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-3 md:mb-4 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent dark:from-neon-teal dark:via-neon-violet dark:to-neon-magenta drop-shadow-lg animate-fade-in">
           Turn Your Notes Into Impact
         </h1>
-        <p className="text-base md:text-xl text-foreground/70 max-w-2xl mb-6 md:mb-8 dark:text-foreground/80 animate-fade-in" style={{ animationDelay: "0.1s" }}>
+        <p className="text-base md:text-xl text-foreground/70 max-w-2xl mb-2 dark:text-foreground/80 animate-fade-in" style={{ animationDelay: "0.1s" }}>
           Upload, earn, and help students learn better across Bangladesh
         </p>
+
+        {/* Verification Signal */}
+        <div className="flex items-center gap-2 text-sm text-muted-foreground mb-6 animate-fade-in" style={{ animationDelay: "0.15s" }}>
+          <CheckCircle2 className="h-4 w-4 text-green-500" />
+          <span>Notes reviewed by top contributors</span>
+        </div>
+
         <div className="flex flex-col sm:flex-row gap-3 md:gap-4 animate-fade-in" style={{ animationDelay: "0.2s" }}>
           <Button 
             size="lg" 
-            className="bg-gradient-to-r from-neon-teal to-neon-violet hover:shadow-glow-teal transition-all duration-300 text-primary-foreground font-semibold px-6 md:px-8"
+            className="bg-gradient-to-r from-neon-teal to-neon-violet hover:shadow-glow-teal transition-all duration-300 text-primary-foreground font-semibold px-6 md:px-8 hover:-translate-y-0.5"
             onClick={() => navigate("/materials")}
           >
             <Upload className="mr-2 h-5 w-5" />
@@ -31,12 +54,28 @@ export const HeroSection = () => {
           <Button 
             size="lg" 
             variant="outline"
-            className="border-neon-violet/50 hover:border-neon-violet hover:shadow-glow-violet transition-all duration-300 font-semibold px-6 md:px-8"
+            className="border-neon-violet/50 hover:border-neon-violet hover:shadow-glow-violet transition-all duration-300 font-semibold px-6 md:px-8 hover:-translate-y-0.5"
             onClick={() => navigate("/materials")}
           >
             <BookOpen className="mr-2 h-5 w-5" />
             Browse Sheets
           </Button>
+        </div>
+
+        {/* Secondary CTA */}
+        <p className="text-xs text-muted-foreground mt-4 animate-fade-in" style={{ animationDelay: "0.3s" }}>
+          No credit card required • Start free
+        </p>
+
+        {/* Live Counter */}
+        <div className="flex items-center gap-2 mt-6 px-3 py-1.5 rounded-full bg-green-500/10 border border-green-500/30 animate-fade-in" style={{ animationDelay: "0.4s" }}>
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+          </span>
+          <span className="text-xs text-green-500 font-medium">
+            {onlineCount} students online right now
+          </span>
         </div>
       </div>
     </section>
