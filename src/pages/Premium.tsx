@@ -3,11 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Check, X, Crown, Zap, Star, Sparkles, Shield, Heart, HelpCircle, AlertCircle } from "lucide-react";
+import { Check, X, Crown, Zap, Star, Sparkles, Shield, Heart, HelpCircle, AlertCircle, BookOpen, GraduationCap, Users } from "lucide-react";
 import { Header } from "@/components/Header";
 
 interface Subscription {
@@ -26,6 +26,8 @@ const plans = [
     icon: Zap,
     color: "from-blue-500 to-cyan-500",
     iconColor: "text-blue-500",
+    useCase: "Best for trying out",
+    useCaseIcon: Sparkles,
   },
   {
     name: "Quarterly",
@@ -37,6 +39,8 @@ const plans = [
     color: "from-neon-violet to-neon-magenta",
     iconColor: "text-neon-violet",
     recommended: true,
+    useCase: "Best for exam prep",
+    useCaseIcon: GraduationCap,
   },
   {
     name: "Annual",
@@ -47,6 +51,8 @@ const plans = [
     icon: Star,
     color: "from-yellow-500 to-orange-500",
     iconColor: "text-yellow-500",
+    useCase: "Best for serious students",
+    useCaseIcon: BookOpen,
   },
 ];
 
@@ -59,12 +65,36 @@ const comparisonFeatures = [
   { feature: "Support", free: "Community", premium: "Priority support", tooltip: "Direct support from our team" },
 ];
 
+const featureSpotlights = [
+  {
+    title: "Ad-Free Learning",
+    description: "Focus on what matters without distractions",
+    icon: Shield,
+  },
+  {
+    title: "Unlimited Downloads",
+    description: "Access all study materials anytime",
+    icon: BookOpen,
+  },
+  {
+    title: "Priority Q&A",
+    description: "Get answers faster from top tutors",
+    icon: Zap,
+  },
+  {
+    title: "Support Creators",
+    description: "Your subscription helps student contributors",
+    icon: Heart,
+  },
+];
+
 export default function Premium() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [subscription, setSubscription] = useState<Subscription | null>(null);
   const [loading, setLoading] = useState(true);
+  const [currentSpotlight, setCurrentSpotlight] = useState(0);
 
   useEffect(() => {
     if (!user) {
@@ -73,6 +103,14 @@ export default function Premium() {
     }
     fetchSubscriptionData();
   }, [user, navigate]);
+
+  // Rotate feature spotlight
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSpotlight((prev) => (prev + 1) % featureSpotlights.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
 
   const fetchSubscriptionData = async () => {
     try {
@@ -109,6 +147,7 @@ export default function Premium() {
   }
 
   const isPremium = subscription?.tier && subscription.tier !== "free";
+  const spotlight = featureSpotlights[currentSpotlight];
 
   return (
     <TooltipProvider>
@@ -141,6 +180,29 @@ export default function Premium() {
                 Current Plan: {subscription?.tier?.toUpperCase()}
               </Badge>
             )}
+          </div>
+
+          {/* Rotating Feature Spotlight */}
+          <div className="max-w-md mx-auto mb-8">
+            <Card className="border-neon-violet/30 bg-gradient-to-br from-neon-violet/5 to-neon-magenta/5 overflow-hidden">
+              <CardContent className="p-4 flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-neon-violet to-neon-magenta flex items-center justify-center flex-shrink-0 animate-pulse-soft">
+                  <spotlight.icon className="h-6 w-6 text-white" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-semibold text-sm">{spotlight.title}</h3>
+                  <p className="text-xs text-muted-foreground">{spotlight.description}</p>
+                </div>
+                <div className="flex gap-1">
+                  {featureSpotlights.map((_, i) => (
+                    <div 
+                      key={i} 
+                      className={`w-1.5 h-1.5 rounded-full transition-colors ${i === currentSpotlight ? 'bg-neon-violet' : 'bg-muted'}`}
+                    />
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
           </div>
 
           {/* Free Plan Limitation Note */}
@@ -176,6 +238,13 @@ export default function Premium() {
                     <plan.icon className="h-7 w-7 text-white" />
                   </div>
                   <CardTitle className="text-xl">{plan.name}</CardTitle>
+                  
+                  {/* Use Case Framing */}
+                  <div className="flex items-center justify-center gap-1.5 mt-2 text-xs text-muted-foreground">
+                    <plan.useCaseIcon className="h-3.5 w-3.5" />
+                    <span>{plan.useCase}</span>
+                  </div>
+
                   {plan.savings && (
                     <Badge variant="secondary" className="mt-2 w-fit mx-auto bg-green-500/10 text-green-500 border-green-500/30">
                       {plan.savings}
@@ -202,7 +271,7 @@ export default function Premium() {
                     </li>
                   </ul>
                 </CardContent>
-                <CardFooter>
+                <CardFooter className="flex-col gap-2">
                   <Button 
                     className={`w-full transition-all duration-300 ${plan.recommended ? "bg-gradient-to-r from-neon-violet to-neon-magenta hover:opacity-90 hover:shadow-glow-violet" : "hover:-translate-y-0.5"}`}
                     variant={plan.recommended ? "default" : "outline"}
@@ -211,6 +280,12 @@ export default function Premium() {
                   >
                     {isPremium ? "Already Premium" : `Get ${plan.name}`}
                   </Button>
+                  
+                  {/* Contributor support note */}
+                  <div className="flex items-center justify-center gap-1 text-[10px] text-muted-foreground">
+                    <Users className="h-3 w-3" />
+                    <span>Supports student creators</span>
+                  </div>
                 </CardFooter>
               </Card>
             ))}
