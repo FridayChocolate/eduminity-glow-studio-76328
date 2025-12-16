@@ -6,10 +6,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
   Upload, Download, Wallet, Star, TrendingUp, 
   FileText, ShoppingCart, MessageSquare, Award,
-  ArrowRight, Target, ArrowUpRight, Info, HelpCircle
+  ArrowRight, Target, ArrowUpRight, HelpCircle, 
+  Lightbulb, BookOpen, Zap, ChevronRight
 } from "lucide-react";
 import { useCountUp } from "@/hooks/useCountUp";
 
@@ -22,6 +24,7 @@ const statsData = [
     color: "text-neon-teal", 
     bgColor: "bg-neon-teal/10",
     insight: "Top 25% of contributors",
+    comparison: "ahead of 60% of contributors",
     trend: null
   },
   { 
@@ -31,6 +34,7 @@ const statsData = [
     color: "text-neon-violet", 
     bgColor: "bg-neon-violet/10",
     insight: "↑ 12% this week",
+    comparison: "2x average for your level",
     trend: "up"
   },
   { 
@@ -40,6 +44,7 @@ const statsData = [
     color: "text-neon-magenta", 
     bgColor: "bg-neon-magenta/10",
     insight: "৳1,200 pending",
+    comparison: "Top 30% earner this month",
     trend: null,
     prefix: "৳"
   },
@@ -50,6 +55,7 @@ const statsData = [
     color: "text-yellow-500", 
     bgColor: "bg-yellow-500/10",
     insight: "Excellent!",
+    comparison: "Higher than 85% of creators",
     trend: null,
     suffix: "★",
     isDecimal: true
@@ -63,13 +69,51 @@ const recentActivity = [
   { type: "message", message: "New question on your Biology notes", time: "2 days ago", icon: MessageSquare, isNew: false },
 ];
 
-const monthlyData = [
-  { month: "Jul", earnings: 1200, downloads: 320 },
-  { month: "Aug", earnings: 1850, downloads: 480 },
-  { month: "Sep", earnings: 2100, downloads: 520 },
-  { month: "Oct", earnings: 1600, downloads: 410 },
-  { month: "Nov", earnings: 2800, downloads: 680 },
-  { month: "Dec", earnings: 3200, downloads: 750 },
+const monthlyData = {
+  weekly: [
+    { label: "Mon", earnings: 450, downloads: 85 },
+    { label: "Tue", earnings: 380, downloads: 72 },
+    { label: "Wed", earnings: 520, downloads: 98 },
+    { label: "Thu", earnings: 610, downloads: 115 },
+    { label: "Fri", earnings: 490, downloads: 92 },
+    { label: "Sat", earnings: 720, downloads: 135 },
+    { label: "Sun", earnings: 580, downloads: 108 },
+  ],
+  monthly: [
+    { label: "Jul", earnings: 1200, downloads: 320 },
+    { label: "Aug", earnings: 1850, downloads: 480 },
+    { label: "Sep", earnings: 2100, downloads: 520 },
+    { label: "Oct", earnings: 1600, downloads: 410 },
+    { label: "Nov", earnings: 2800, downloads: 680 },
+    { label: "Dec", earnings: 3200, downloads: 750 },
+  ],
+};
+
+const suggestedActions = [
+  {
+    title: "Upload New Notes",
+    description: "Your Physics notes are popular. Upload more to boost earnings!",
+    icon: Upload,
+    color: "from-neon-teal to-cyan-500",
+    action: "/materials",
+    priority: "high"
+  },
+  {
+    title: "Answer Questions",
+    description: "3 unanswered questions match your expertise",
+    icon: MessageSquare,
+    color: "from-neon-violet to-purple-500",
+    action: "/questions",
+    priority: "medium"
+  },
+  {
+    title: "Complete Profile",
+    description: "Add your expertise to get more visibility",
+    icon: BookOpen,
+    color: "from-neon-magenta to-pink-500",
+    action: "/profile",
+    priority: "low"
+  },
 ];
 
 const StatCard = ({ stat, index }: { stat: typeof statsData[0]; index: number }) => {
@@ -103,6 +147,18 @@ const StatCard = ({ stat, index }: { stat: typeof statsData[0]; index: number })
             {stat.insight}
           </div>
         )}
+        {stat.comparison && (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div className="text-[10px] mt-1 text-neon-teal/70 cursor-help truncate">
+                {stat.comparison}
+              </div>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Performance comparison with other contributors</p>
+            </TooltipContent>
+          </Tooltip>
+        )}
       </CardContent>
     </Card>
   );
@@ -114,6 +170,7 @@ export default function Dashboard() {
   const [uploadsProgress] = useState(24);
   const uploadGoal = 100;
   const [visibleActivities, setVisibleActivities] = useState<number[]>([]);
+  const [timeFilter, setTimeFilter] = useState<"weekly" | "monthly">("monthly");
 
   useEffect(() => {
     if (!user) {
@@ -138,7 +195,8 @@ export default function Dashboard() {
   };
 
   const badge = getBadgeLevel(uploadsProgress);
-  const maxEarnings = Math.max(...monthlyData.map(d => d.earnings));
+  const chartData = monthlyData[timeFilter];
+  const maxEarnings = Math.max(...chartData.map(d => d.earnings));
   const uploadsToNext = uploadsProgress < 10 ? 10 - uploadsProgress : uploadsProgress < 50 ? 50 - uploadsProgress : 100 - uploadsProgress;
   const nextLevel = uploadsProgress < 10 ? "Rising Star" : uploadsProgress < 50 ? "Trusted" : "Top Contributor";
 
@@ -170,6 +228,42 @@ export default function Dashboard() {
             </Tooltip>
           </div>
 
+          {/* Suggested Actions */}
+          <div className="mb-6 md:mb-8">
+            <div className="flex items-center gap-2 mb-3">
+              <Lightbulb className="h-5 w-5 text-yellow-500" />
+              <h2 className="text-lg font-semibold">Suggested Next Steps</h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              {suggestedActions.map((action, index) => (
+                <Card 
+                  key={index}
+                  className="border-border/50 hover:border-primary/30 transition-all duration-300 hover:-translate-y-1 cursor-pointer group"
+                  onClick={() => navigate(action.action)}
+                >
+                  <CardContent className="p-4 flex items-start gap-3">
+                    <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${action.color} flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover:scale-110`}>
+                      <action.icon className="h-5 w-5 text-white" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between gap-2">
+                        <h3 className="font-medium text-sm">{action.title}</h3>
+                        {action.priority === "high" && (
+                          <Badge variant="secondary" className="text-[10px] bg-neon-teal/20 text-neon-teal">
+                            <Zap className="h-2.5 w-2.5 mr-1" />
+                            Suggested
+                          </Badge>
+                        )}
+                      </div>
+                      <p className="text-xs text-muted-foreground mt-1 line-clamp-2">{action.description}</p>
+                    </div>
+                    <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+
           {/* Stats Cards */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-6 md:mb-8">
             {statsData.map((stat, index) => (
@@ -178,26 +272,42 @@ export default function Dashboard() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6 mb-6 md:mb-8">
-            {/* Performance Graph */}
+            {/* Performance Graph with Time Filter */}
             <Card className="lg:col-span-2 border-border/50">
               <CardHeader className="pb-2">
-                <CardTitle className="flex items-center gap-2 text-lg">
-                  <TrendingUp className="h-5 w-5 text-neon-teal" />
-                  Monthly Performance
-                </CardTitle>
+                <div className="flex items-center justify-between">
+                  <CardTitle className="flex items-center gap-2 text-lg">
+                    <TrendingUp className="h-5 w-5 text-neon-teal" />
+                    Performance
+                  </CardTitle>
+                  <Tabs value={timeFilter} onValueChange={(v) => setTimeFilter(v as "weekly" | "monthly")}>
+                    <TabsList className="h-8">
+                      <TabsTrigger value="weekly" className="text-xs px-3 h-6">Weekly</TabsTrigger>
+                      <TabsTrigger value="monthly" className="text-xs px-3 h-6">Monthly</TabsTrigger>
+                    </TabsList>
+                  </Tabs>
+                </div>
               </CardHeader>
               <CardContent>
                 <div className="h-48 md:h-64 flex items-end justify-between gap-2 md:gap-4">
-                  {monthlyData.map((data, index) => (
+                  {chartData.map((data, index) => (
                     <div key={index} className="flex-1 flex flex-col items-center gap-2 group">
-                      <div 
-                        className="w-full bg-gradient-to-t from-neon-teal to-neon-violet rounded-t-md transition-all duration-500 group-hover:shadow-glow-teal/50"
-                        style={{ 
-                          height: `${(data.earnings / maxEarnings) * 100}%`,
-                          animationDelay: `${index * 0.1}s`
-                        }}
-                      />
-                      <span className="text-xs text-muted-foreground">{data.month}</span>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <div 
+                            className="w-full bg-gradient-to-t from-neon-teal to-neon-violet rounded-t-md transition-all duration-500 group-hover:shadow-glow-teal/50 cursor-pointer"
+                            style={{ 
+                              height: `${(data.earnings / maxEarnings) * 100}%`,
+                              animationDelay: `${index * 0.1}s`
+                            }}
+                          />
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p className="font-medium">৳{data.earnings}</p>
+                          <p className="text-xs text-muted-foreground">{data.downloads} downloads</p>
+                        </TooltipContent>
+                      </Tooltip>
+                      <span className="text-xs text-muted-foreground">{data.label}</span>
                     </div>
                   ))}
                 </div>
