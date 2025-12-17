@@ -165,7 +165,7 @@ const StatCard = ({ stat, index }: { stat: typeof statsData[0]; index: number })
 };
 
 export default function Dashboard() {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const navigate = useNavigate();
   const [uploadsProgress] = useState(24);
   const uploadGoal = 100;
@@ -173,10 +173,18 @@ export default function Dashboard() {
   const [timeFilter, setTimeFilter] = useState<"weekly" | "monthly">("monthly");
 
   useEffect(() => {
-    if (!user) {
+    if (!loading && !user) {
       navigate("/auth");
     }
-  }, [user, navigate]);
+  }, [user, loading, navigate]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+      </div>
+    );
+  }
 
   // Animate activity items appearing
   useEffect(() => {

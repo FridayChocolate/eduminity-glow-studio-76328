@@ -42,14 +42,17 @@ export const useAuth = () => {
   }, []);
 
   const fetchUserRole = async (userId: string) => {
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from("user_roles")
       .select("role")
       .eq("user_id", userId)
-      .single();
+      .maybeSingle(); // Use maybeSingle instead of single to avoid 406 error
     
-    if (data) {
+    if (data && !error) {
       setUserRole(data.role as 'student' | 'contributor');
+    } else {
+      // Default to student if no role exists
+      setUserRole('student');
     }
   };
 
