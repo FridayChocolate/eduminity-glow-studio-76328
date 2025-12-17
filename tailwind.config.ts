@@ -53,6 +53,17 @@ export default {
           blue: "hsl(var(--neon-blue))",
           magenta: "hsl(var(--neon-magenta))",
         },
+        student: {
+          accent: "hsl(var(--student-accent))",
+          bg: "hsl(var(--student-bg))",
+        },
+        creator: {
+          magenta: "hsl(var(--creator-magenta))",
+          violet: "hsl(var(--creator-violet))",
+          green: "hsl(var(--creator-green))",
+          bg: "hsl(var(--creator-bg))",
+          border: "hsl(var(--creator-border))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -112,6 +123,11 @@ export default {
           "0%": { transform: "translateY(0)" },
           "100%": { transform: "translateY(-4px)" },
         },
+        "mode-transition": {
+          "0%": { opacity: "0", transform: "scale(1.1)" },
+          "50%": { opacity: "1", transform: "scale(1)" },
+          "100%": { opacity: "0", transform: "scale(0.95)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -123,6 +139,7 @@ export default {
         "shooting-star": "shooting-star 3s ease-in-out infinite",
         "spin-slow": "spin-slow 10s linear infinite",
         "pulse-soft": "pulse-soft 2s ease-in-out infinite",
+        "mode-transition": "mode-transition 0.8s ease-in-out forwards",
       },
     },
   },

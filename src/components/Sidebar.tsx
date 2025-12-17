@@ -1,14 +1,16 @@
-import { Upload, Settings, Eye, List, TrendingUp, DollarSign, Wallet, LogOut, UserPlus, User, Feather, LayoutDashboard } from "lucide-react";
+import { Upload, Settings, Eye, List, TrendingUp, DollarSign, Wallet, LogOut, UserPlus, User, Feather, LayoutDashboard, GraduationCap, Palette } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import { useMode } from "@/contexts/ModeContext";
 
 export const Sidebar = () => {
   const { user, userRole, signOut } = useAuth();
   const navigate = useNavigate();
+  const { mode, setMode } = useMode();
 
   return (
     <aside className="w-64 border-r border-border bg-card/50 backdrop-blur-sm p-4 space-y-4">
@@ -62,14 +64,35 @@ export const Sidebar = () => {
         <Card className="p-4 bg-gradient-card dark:border-neon-violet/30 dark:shadow-glow-violet">
           <h3 className="font-semibold text-sm mb-3 text-muted-foreground">My Profile</h3>
           <nav className="space-y-1">
-            <Button 
-              variant="ghost" 
-              className="w-full justify-start text-sm dark:hover:bg-neon-teal/10 dark:hover:text-neon-teal"
-              onClick={() => navigate("/dashboard")}
-            >
-              <LayoutDashboard className="mr-2 h-4 w-4" />
-              Dashboard
-            </Button>
+            {/* Mode-specific Dashboard Links */}
+            {mode === "student" ? (
+              <Button 
+                variant="ghost" 
+                className="w-full justify-start text-sm bg-student-accent/10 text-student-accent border border-student-accent/20"
+                onClick={() => navigate("/student-dashboard")}
+              >
+                <GraduationCap className="mr-2 h-4 w-4" />
+                Learning Dashboard
+              </Button>
+            ) : mode === "contributor" ? (
+              <Button 
+                variant="ghost" 
+                className="w-full justify-start text-sm bg-creator-magenta/10 text-creator-magenta border border-creator-magenta/20"
+                onClick={() => navigate("/creator-studio")}
+              >
+                <Palette className="mr-2 h-4 w-4" />
+                Creator Studio
+              </Button>
+            ) : (
+              <Button 
+                variant="ghost" 
+                className="w-full justify-start text-sm dark:hover:bg-neon-teal/10 dark:hover:text-neon-teal"
+                onClick={() => navigate("/dashboard")}
+              >
+                <LayoutDashboard className="mr-2 h-4 w-4" />
+                Dashboard
+              </Button>
+            )}
             <Button 
               variant="ghost" 
               className="w-full justify-start text-sm dark:hover:bg-neon-violet/10 dark:hover:text-neon-violet"
