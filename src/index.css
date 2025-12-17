@@ -45,6 +45,17 @@ All colors MUST be HSL.
     --neon-blue: 217 91% 60%;
     --neon-magenta: 330 81% 60%;
 
+    /* Student Mode Colors (Light) */
+    --student-accent: 210 100% 50%;
+    --student-bg: 210 40% 98%;
+
+    /* Creator Mode Colors (Light) */
+    --creator-magenta: 330 81% 60%;
+    --creator-violet: 270 70% 60%;
+    --creator-green: 160 84% 39%;
+    --creator-bg: 270 30% 96%;
+    --creator-border: 270 20% 85%;
+
     /* Gradients */
     --gradient-hero: linear-gradient(135deg, hsl(197 71% 73% / 0.3), hsl(270 50% 85% / 0.3));
     --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(210 40% 98%));
@@ -86,9 +97,45 @@ All colors MUST be HSL.
     --neon-blue: 217 91% 60%;
     --neon-magenta: 330 81% 60%;
 
+    /* Student Mode Colors (Dark) - Calm Blue */
+    --student-accent: 210 100% 60%;
+    --student-bg: 220 20% 8%;
+
+    /* Creator Mode Colors (Dark) - Neon Studio */
+    --creator-magenta: 330 90% 65%;
+    --creator-violet: 270 90% 70%;
+    --creator-green: 160 90% 45%;
+    --creator-bg: 270 15% 6%;
+    --creator-border: 270 30% 20%;
+
     /* Dark Gradients */
     --gradient-hero: linear-gradient(135deg, hsl(187 100% 42% / 0.2), hsl(258 90% 66% / 0.2));
     --gradient-card: linear-gradient(145deg, hsl(240 8% 8%), hsl(240 6% 12%));
+  }
+
+  /* Student Mode Overrides */
+  [data-mode="student"] {
+    --primary: var(--student-accent);
+    --ring: var(--student-accent);
+  }
+
+  [data-mode="student"].dark {
+    --card: 220 15% 10%;
+    --muted: 220 15% 14%;
+  }
+
+  /* Contributor/Creator Mode Overrides */
+  [data-mode="contributor"] {
+    --primary: var(--creator-magenta);
+    --secondary: var(--creator-violet);
+    --accent: var(--creator-green);
+    --ring: var(--creator-magenta);
+  }
+
+  [data-mode="contributor"].dark {
+    --card: 270 15% 8%;
+    --muted: 270 15% 12%;
+    --border: var(--creator-border);
   }
 }
 
@@ -109,5 +156,35 @@ All colors MUST be HSL.
 
   h1, h2, h3, h4, h5, h6, p, span, a, button, input, textarea, select, label, div {
     font-family: inherit;
+  }
+}
+
+@layer components {
+  /* Student Mode Card Styles */
+  .student-mode .student-card {
+    @apply bg-card/80 backdrop-blur-sm;
+  }
+
+  /* Creator Mode Card Styles */
+  .contributor-mode .creator-card {
+    @apply bg-card/90 backdrop-blur-sm;
+    background: linear-gradient(145deg, hsl(var(--card)), hsl(var(--creator-bg)));
+  }
+
+  /* Mode Transition Overlay */
+  .mode-transition-bg {
+    background: linear-gradient(
+      135deg,
+      hsl(var(--primary) / 0.95),
+      hsl(var(--secondary) / 0.95),
+      hsl(var(--accent) / 0.95)
+    );
+  }
+}
+
+@layer utilities {
+  /* Smooth mode transitions */
+  .transition-mode {
+    transition: background-color 0.5s ease, border-color 0.5s ease, color 0.3s ease;
   }
 }

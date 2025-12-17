@@ -8,6 +8,7 @@ import { useState } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { FontSelector } from "@/components/FontSelector";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { ModeSwitcher } from "@/components/ModeSwitcher";
 
 export const Header = () => {
   const { user } = useAuth();
@@ -97,6 +98,11 @@ export const Header = () => {
         </div>
         
         <div className="flex items-center gap-1 md:gap-2">
+          {/* Mode Switcher for logged-in users */}
+          <div className="hidden md:block">
+            <ModeSwitcher />
+          </div>
+          
           {/* Font Selector */}
           <FontSelector />
           
