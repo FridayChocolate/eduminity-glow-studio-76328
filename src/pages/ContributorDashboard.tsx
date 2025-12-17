@@ -122,16 +122,24 @@ const StatCard = ({ stat, index }: { stat: typeof statsData[0]; index: number })
 };
 
 export default function ContributorDashboard() {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const navigate = useNavigate();
   const [timeFilter, setTimeFilter] = useState<"weekly" | "monthly">("weekly");
   const maxViews = Math.max(...weeklyTrends.map(d => d.views));
 
   useEffect(() => {
-    if (!user) {
+    if (!loading && !user) {
       navigate("/auth");
     }
-  }, [user, navigate]);
+  }, [user, loading, navigate]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+      </div>
+    );
+  }
 
   const contributorLevel = { name: "Top Contributor", progress: 85, nextLevel: "Elite Creator" };
 

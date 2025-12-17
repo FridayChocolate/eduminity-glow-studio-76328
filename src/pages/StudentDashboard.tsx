@@ -56,15 +56,23 @@ const StatCard = ({ icon: Icon, label, value, color, suffix = "" }: {
 };
 
 export default function StudentDashboard() {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const navigate = useNavigate();
   const [studyStreak] = useState(7);
 
   useEffect(() => {
-    if (!user) {
+    if (!loading && !user) {
       navigate("/auth");
     }
-  }, [user, navigate]);
+  }, [user, loading, navigate]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background student-mode">

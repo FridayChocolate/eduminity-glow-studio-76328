@@ -31,6 +31,7 @@ export const ModeProvider: React.FC<{ children: React.ReactNode }> = ({ children
     } else if (userRole === "contributor") {
       setModeState("contributor");
     } else {
+      // Default to student for logged-in users (including when role is null or 'student')
       setModeState("student");
     }
   }, [user, userRole]);
